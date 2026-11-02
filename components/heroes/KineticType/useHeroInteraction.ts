@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -67,7 +67,9 @@ export function useHeroInteraction(refs: HeroRefs, options: KineticOptions): Her
     };
   }, []);
 
-  useEffect(() => {
+  // ScrollTrigger pin은 root를 pin-spacer로 감싼다. 정리(kill)가 React의 DOM 제거보다 먼저 돌아야
+  // 메뉴로 다른 히어로로 이동할 때 removeChild 오류로 앱이 죽지 않는다 → layout effect 사용.
+  useLayoutEffect(() => {
     const root = refs.root.current;
     const titleEl = refs.title.current;
     const nextEl = refs.next.current;

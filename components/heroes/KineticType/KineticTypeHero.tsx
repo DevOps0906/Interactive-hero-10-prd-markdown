@@ -38,23 +38,26 @@ export default function KineticTypeHero({ content = DEFAULT_CONTENT }: { content
 
   return (
     <>
-      <div ref={rootRef} className="relative" style={tokens} data-state={state} data-tier={tier}>
-        <HeroSlot
-          hero={getHero("kinetic-type")}
-          cta={
-            <>
-              <a href={content.ctaHref} className="btn-primary inline-flex items-center no-underline">{content.ctaLabel}</a>
-              <p role="status" className="m-0 font-mono">
-                {STATE_LABEL[state]}{!fallback && state !== "loading" ? ` · ${tier}` : ""}
-              </p>
-              <p className="m-0 hidden md:block">
-                {reduced ? "모션 감소 설정: 정적 화면" : "스크롤하여 장면 전환 · 마우스를 움직여 보세요"}
-              </p>
-            </>
-          }
-        >
-          <Scene content={content} state={state} tier={tier} reduced={reduced} copies={copies} titleRef={titleRef} nextRef={nextRef} />
-        </HeroSlot>
+      {/* pin-spacer가 끼어들 자리: React가 지우는 노드는 이 외곽 div라 pin 여부와 무관하게 안전하다. */}
+      <div>
+        <div ref={rootRef} className="relative" style={tokens} data-state={state} data-tier={tier}>
+          <HeroSlot
+            hero={getHero("kinetic-type")}
+            cta={
+              <>
+                <a href={content.ctaHref} className="btn-primary inline-flex items-center no-underline">{content.ctaLabel}</a>
+                <p role="status" className="m-0 font-mono">
+                  {STATE_LABEL[state]}{!fallback && state !== "loading" ? ` · ${tier}` : ""}
+                </p>
+                <p className="m-0 hidden md:block">
+                  {reduced ? "모션 감소 설정: 정적 화면" : "스크롤하여 장면 전환 · 마우스를 움직여 보세요"}
+                </p>
+              </>
+            }
+          >
+            <Scene content={content} state={state} tier={tier} reduced={reduced} copies={copies} titleRef={titleRef} nextRef={nextRef} />
+          </HeroSlot>
+        </div>
       </div>
       <Controls options={options} onChange={setOptions} onReplay={replayReveal} disabled={fallback} />
     </>
