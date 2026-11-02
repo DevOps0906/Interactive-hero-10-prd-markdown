@@ -1,0 +1,80 @@
+/* tokens.css — Interactive Hero Lab 디자인 시스템 정답 소스 (Tailwind CSS v4.3 @theme, Next.js 16.4)
+   다크 기본: <html class="dark">. 라이트는 클래스를 뺀 값(@theme). DESIGN.md 표는 design-preview --md 로 재생성 */
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* 색 (의미 이름) — 라이트 값 */
+  --color-bg: #f3f5f8;
+  --color-surface: #ffffff;
+  --color-surface-hover: #e9edf2;
+  --color-text: #12151a;
+  --color-text-muted: #556070;
+  --color-border: #e2e6ec;
+  --color-input: #7b8594;      /* 입력창·체크박스 경계 — 배경 대비 3:1 이상 (WCAG 1.4.11) */
+  --color-primary: #0f766e;    /* 포인트컬러 1개: 현재 위치·CTA·포커스에만 */
+  --color-primary-fg: #ffffff;
+  --color-primary-soft: #d7efec;
+  --color-success: #1f9d55;
+  --color-warning: #b26d0a;
+  --color-danger: #d64545;
+
+  /* 서체 */
+  --font-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;   /* 메뉴 번호 01~10·수치 */
+
+  /* 글자 크기 — 모바일 기준값 (태블릿·데스크톱은 아래 @media) */
+  --text-display: 28px;   /* 히어로 제목 */
+  --text-h1: 24px;
+  --text-h2: 20px;
+  --text-body: 15px;
+  --text-nav: 15px;       /* GNB 라벨 */
+  --text-caption: 12px;
+
+  /* 간격 · 반경 · 그림자 */
+  --spacing: 4px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 12px rgb(0 0 0 / 0.06);
+
+  /* GNB 치수 */
+  --size-gnb-expanded: 248px;  /* 1200~ 펼침 */
+  --size-gnb-rail: 64px;       /* 768~1199 아이콘 레일, 데스크톱 접힘 */
+  --size-gnb-drawer: 288px;    /* ~767 드로어 */
+  --size-gnb-item: 40px;       /* 메뉴 행 높이 (터치 최소 40) */
+  --size-topbar: 56px;         /* 모바일 상단 바 */
+
+  /* 포커스 링 · 모션 (transform·opacity만 애니메이션) */
+  --ring-width: 2px;
+  --ring-offset: 2px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+}
+
+@media (width >= 768px) {
+  :root { --text-display: 36px; --text-h1: 28px; --text-h2: 22px; --text-body: 16px; --text-nav: 14px; --text-caption: 13px; }
+}
+@media (width >= 1200px) {
+  :root { --text-display: 48px; --text-h1: 34px; --text-h2: 26px; --text-body: 16px; --text-nav: 14px; --text-caption: 13px; }
+}
+
+.dark {
+  --color-bg: #0b0e14;
+  --color-surface: #141922;
+  --color-surface-hover: #1c2330;
+  --color-text: #eef0f3;
+  --color-text-muted: #9aa2ae;
+  --color-border: #232a36;
+  --color-input: #667084;
+  --color-primary: #3fd0bd;
+  --color-primary-fg: #0b0e14;
+  --color-primary-soft: #12302f;
+  --color-success: #34c27a;
+  --color-warning: #e0a030;
+  --color-danger: #ef6b6b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-base: 0ms; }
+}
