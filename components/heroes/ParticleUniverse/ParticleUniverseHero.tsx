@@ -56,6 +56,9 @@ export default function ParticleUniverseHero({
   const boxRef = useRef<HTMLDivElement>(null);
   const commandsRef = useRef<SceneCommands | null>(null);
   const rig = useRef<IntroRig>({ camZ: CAMERA.start, gather: 0 });
+  // Canvas가 다시 만들어져 onCreated가 중복 호출돼도 인트로는 시도(attempt)당 한 번만 시작한다.
+  const introStarted = useRef(false);
+  const stopIntro = useRef<(() => void) | null>(null);
 
   const [settings, setSettings] = useState<HeroSettings>({ ...DEFAULT_SETTINGS, ...initialSettings });
   const [stats, setStats] = useState<HeroStats | null>(null);
@@ -66,7 +69,11 @@ export default function ParticleUniverseHero({
   const { state, stateRef, go, settle, pointer, reducedMotion, active } = useHeroInteraction({ rootRef, boxRef });
 
   const onReady = useCallback(() => {
-    if (go("intro")) setIntroToken((t) => t + 1);
+    if (introStarted.current) return;
+    if (go("intro")) {
+      introStarted.current = true;
+      setIntroToken((t) => t + 1);
+    }
   }, [go]);
   const onError = useCallback(() => {
     go("error");
@@ -80,9 +87,20 @@ export default function ParticleUniverseHero({
     () => {
       if (introToken === 0) return;
       const r = rig.current;
+      const root = rootRef.current;
+      // 이전 타임라인이 남아 있으면 먼저 끝내고 제목·CTA를 복원한다.
+      stopIntro.current?.();
+      stopIntro.current = null;
+      const restore = () => {
+        // 인라인 opacity/transform을 지워 CSS 기본값(보임)으로 되돌린다.
+        root?.querySelectorAll(".hero-text, [data-pu-cta]").forEach((el) => {
+          gsap.set(el, { clearProps: "opacity,transform" });
+        });
+      };
       if (reducedMotion) {
         r.camZ = CAMERA.end;
         r.gather = 1;
+        restore();
         go("idle");
         return;
       }
@@ -90,13 +108,30 @@ export default function ParticleUniverseHero({
       r.gather = 0;
       const tl = gsap.timeline({
         onComplete: () => {
+          r.camZ = CAMERA.end;
+          r.gather = 1;
+          restore();
           go("idle");
         },
       });
       tl.to(r, { camZ: CAMERA.end, duration: 2.4, ease: "power2.inOut" }, 0)
         .to(r, { gather: 1, duration: 2.2, ease: "power2.out" }, 0.4)
-        .fromTo(".hero-text", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 1.6)
+        // 제목은 숨기지 않는다(프레임이 느려 타임라인이 지연돼도 항상 읽혀야 함). 위치만 살짝 움직인다.
+        .fromTo(".hero-text", { y: 20 }, { y: 0, duration: 0.9, ease: "power3.out" }, 1.6)
         .fromTo("[data-pu-cta]", { opacity: 0.5, y: 8 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.5);
+      // GSAP는 저프레임에서 시간을 늦추므로(lagSmoothing), 벽시계 기준으로 인트로를 반드시 끝낸다.
+      const deadline = window.setTimeout(() => {
+        if (tl.isActive()) tl.progress(1);
+      }, (tl.duration() + 1) * 1000);
+      const stop = () => {
+        window.clearTimeout(deadline);
+        tl.kill();
+        r.camZ = CAMERA.end;
+        r.gather = 1;
+        restore();
+      };
+      stopIntro.current = stop;
+      return stop;
     },
     { scope: rootRef, dependencies: [introToken, reducedMotion] },
   );
@@ -115,7 +150,10 @@ export default function ParticleUniverseHero({
   }, [go]);
 
   const retry = useCallback(() => {
-    if (go("loading")) setAttempt((a) => a + 1);
+    if (go("loading")) {
+      introStarted.current = false;
+      setAttempt((a) => a + 1);
+    }
   }, [go]);
 
   const ctaReady = state !== "loading" && state !== "intro";

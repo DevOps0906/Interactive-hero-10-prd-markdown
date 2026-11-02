@@ -41,11 +41,11 @@ class Boundary extends Component<{ children: ReactNode; fallback?: ReactNode; on
 }
 
 // ───────── 모델 ─────────
-const darkProps = { color: "#12151b", roughness: 0.55, metalness: 0.3 } as const;
+const darkProps = { color: "#3a4252", roughness: 0.5, metalness: 0.25 } as const;
 
 function PartMaterial({ role, mat, accent }: { role: PartSpec["role"]; mat: THREE.Material; accent: string }) {
   if (role === "finish") return <primitive object={mat} attach="material" />;
-  if (role === "glow") return <meshStandardMaterial color="#0d2a2a" emissive={accent} emissiveIntensity={1.6} roughness={0.4} />;
+  if (role === "glow") return <meshStandardMaterial color="#14504b" emissive={accent} emissiveIntensity={1.6} roughness={0.4} />;
   return <meshStandardMaterial {...darkProps} />;
 }
 
@@ -73,7 +73,7 @@ function ProceduralModel({ product, mat, registryRef, segments }: { product: Pro
           {p.id === "driver" && (
             <mesh position={[0, 0.17, 0]}>
               <cylinderGeometry args={[0.25, 0.45, 0.12, segments]} />
-              <meshStandardMaterial color="#1b2028" roughness={0.3} metalness={0.8} />
+              <meshStandardMaterial color="#59647a" roughness={0.35} metalness={0.5} />
             </mesh>
           )}
         </group>
@@ -140,6 +140,7 @@ function Hotspot({ part, registryRef, yaw, active, visible, onSelect }: { part: 
 // ───────── 장면 ─────────
 function SceneContent({ state, actions, reduced, tier, fpsRef, product }: SceneProps) {
   const quality = QUALITY_PRESETS[tier];
+  const envOn = quality.environment; // 환경광이 없으면 금속은 검게 보이므로 metalness 상한
   const { camera, size } = useThree();
   const yaw = useRef<THREE.Group>(null);
   const controls = useRef<React.ComponentRef<typeof OrbitControls>>(null);
@@ -227,11 +228,11 @@ function SceneContent({ state, actions, reduced, tier, fpsRef, product }: SceneP
   useEffect(() => {
     const dur = reduced ? 0 : slowMaterial.current ? 0.7 : 0.1;
     slowMaterial.current = false;
-    const tw = gsap.to(finishMat, { roughness: state.roughness, metalness: state.metalness, duration: dur, overwrite: "auto" });
+    const tw = gsap.to(finishMat, { roughness: state.roughness, metalness: envOn ? state.metalness : Math.min(state.metalness, 0.3), duration: dur, overwrite: "auto" });
     return () => {
       tw.kill();
     };
-  }, [state.roughness, state.metalness, finishMat, reduced]);
+  }, [state.roughness, state.metalness, finishMat, reduced, envOn]);
 
   // 부품 단위 exploded view (복귀 시 t=0 으로 정확히 원위치)
   const exploded = state.exploded;
@@ -296,8 +297,8 @@ function SceneContent({ state, actions, reduced, tier, fpsRef, product }: SceneP
     if (controls.current) controls.current.target.y = 0.9 * t;
     // 광원 (hero-intensity × 인트로 페이드)
     const k = state.intensity * introK.current.k;
-    if (keyLight.current) keyLight.current.intensity = 2.4 * k;
-    if (rimLight.current) rimLight.current.intensity = 1.6 * k;
+    if (keyLight.current) keyLight.current.intensity = 3 * k;
+    if (rimLight.current) rimLight.current.intensity = 2.2 * k;
     // 프레임 시간 모니터 → 자동 품질 하향
     if (state.phase === "idle" || state.phase === "interacting" || state.phase === "transitioning") {
       if (delta < 0.25) {
@@ -321,11 +322,12 @@ function SceneContent({ state, actions, reduced, tier, fpsRef, product }: SceneP
 
   return (
     <>
-      <ambientLight intensity={0.35} />
+      <ambientLight intensity={0.6} />
+      <hemisphereLight args={["#9fb4d6", "#1a2030", 0.9]} />
       <directionalLight ref={keyLight} position={[4, 6, 3]} intensity={0} castShadow={quality.shadows} shadow-mapSize={[1024, 1024]} />
       <directionalLight ref={rimLight} position={[-4, 2, -4]} color={product.accent} intensity={0} />
       {quality.environment && (
-        <Environment resolution={128} frames={1} environmentIntensity={0.7 * state.intensity}>
+        <Environment resolution={128} frames={1} environmentIntensity={1.4 * state.intensity}>
           <Lightformer form="rect" intensity={3} position={[0, 5, 2]} scale={[8, 3, 1]} />
           <Lightformer form="rect" intensity={1.5} position={[-5, 1, -1]} rotation={[0, Math.PI / 2, 0]} scale={[6, 2, 1]} />
           <Lightformer form="ring" intensity={2} color={product.accent} position={[4, 0, -3]} scale={4} />

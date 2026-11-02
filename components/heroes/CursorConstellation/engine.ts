@@ -132,16 +132,13 @@ export class ConstellationEngine {
     const rows = Math.ceil(n / cols);
     const cw = this.w / cols;
     const ch = this.h / rows;
-    const cx = this.w / 2;
-    const cy = this.h / 2;
-    const k = this.ctl.intro < 1 ? 0.2 : 1;
     for (let i = 0; i < n; i++) {
       const gx = (i % cols) + 0.15 + Math.random() * 0.7;
       const gy = Math.floor(i / cols) + 0.15 + Math.random() * 0.7;
       this.hx[i] = gx * cw;
       this.hy[i] = gy * ch;
-      this.x[i] = cx + (this.hx[i] - cx) * k;
-      this.y[i] = cy + (this.hy[i] - cy) * k;
+      this.x[i] = this.hx[i];
+      this.y[i] = this.hy[i];
       this.ph[i] = Math.random() * Math.PI * 2;
     }
     this.segs = new Float32Array(n * 8 * 4);
@@ -492,6 +489,10 @@ export class ConstellationEngine {
     const intro = this.ctl.intro;
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.clearRect(0, 0, this.w, this.h);
+    // 인트로 확산은 시뮬레이션이 아니라 intro 값의 함수로 그려 프레임 속도와 무관하게 전체 영역에 수렴시킨다.
+    const k = 0.2 + 0.8 * intro;
+    const d = this.dpr;
+    ctx.setTransform(d * k, 0, 0, d * k, d * (this.w / 2) * (1 - k), d * (this.h / 2) * (1 - k));
     ctx.lineWidth = 1;
     ctx.strokeStyle = this.colors.accent;
     const base = 0.55 * (0.5 + 0.5 * s.intensity) * intro * intro;

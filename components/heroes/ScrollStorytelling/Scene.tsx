@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
 import { clampDpr, DPR_MAX_BY_TIER, downgradeTier, type QualityTier } from "@/lib/hero/performance";
 import { CAMERA_KEYS, explodeAmount, PRESETS, rotationAngle, smooth, type HeroSettings } from "./config";
@@ -87,11 +88,11 @@ function Model({ progressRef, settings, segments, detail }: { progressRef: RefOb
   return (
     <group ref={group}>
       <mesh ref={core} geometry={coreGeo}>
-        <meshStandardMaterial color={settings.accent} emissive={settings.accent} emissiveIntensity={0.5 * settings.intensity} flatShading />
+        <meshStandardMaterial color={settings.accent} emissive={settings.accent} emissiveIntensity={0.8 * settings.intensity} flatShading />
       </mesh>
       {dirs.map((_, i) => (
         <mesh key={i} ref={(m) => void (panels.current[i] = m)} geometry={i < segments ? panelGeo : capGeo}>
-          <meshStandardMaterial color="#1c2330" metalness={0.6} roughness={0.35} />
+          <meshStandardMaterial color="#5d6b86" metalness={0.35} roughness={0.4} />
         </mesh>
       ))}
     </group>
@@ -152,7 +153,13 @@ export default function Scene({ progressRef, introRef, settings, tier, onReady, 
         gl={{ antialias: preset.antialias, powerPreference: "high-performance" }}
         onCreated={onReady}
       >
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={0.8} />
+        <hemisphereLight args={["#9fb4d6", "#1a2030", 0.9]} />
+        <Environment resolution={64} frames={1} environmentIntensity={settings.intensity}>
+          <Lightformer form="rect" intensity={3} position={[0, 5, 2]} scale={[8, 3, 1]} />
+          <Lightformer form="rect" intensity={1.5} position={[-5, 1, -1]} rotation={[0, Math.PI / 2, 0]} scale={[6, 2, 1]} />
+          <Lightformer form="ring" intensity={2} color={settings.accent} position={[4, 0, -3]} scale={4} />
+        </Environment>
         <directionalLight position={[4, 5, 3]} intensity={1.4 * settings.intensity} />
         <pointLight position={[-4, -2, -3]} intensity={25} color={settings.accent} />
         <Model progressRef={progressRef} settings={settings} segments={preset.segments} detail={preset.detail} />

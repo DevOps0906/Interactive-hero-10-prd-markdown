@@ -13,8 +13,11 @@
 | 1. 디자인 토큰·DESIGN.md·미리보기 (`design/`) | designer (sonnet) | 완료 (시안: design/preview.html) |
 | 2. 디자인 확정 | 팀장 | 추천값 적용(틸·248/64/288·레일·번호 아이콘·데모 버튼 제거) |
 | 3. Next.js 셸: GNB + 10개 라우트 + 히어로 자리 (브랜치 feat/hero-dashboard) | builder | 완료 (커밋 57ded19, build·lint·10라우트 200) |
-| 4. 히어로 10개 병렬 구현 (각 PRD P0~P5, 폴더 분리) | builder ×10 → codex-reviewer | 진행 중 (10명 동시) |
-| 5. 통합 검증: next build·lint·브라우저 확인·리뷰 → 커밋·push | 팀장 | 대기 |
+| 4. 히어로 10개 병렬 구현 (각 PRD P0~P5, 폴더 분리) | builder ×10 | 완료 (커밋 76e2bad) |
+| 5a. 통합 검증 1차: build·lint 통과, 10라우트 콘솔 오류 0 | 팀장 | 완료 |
+| 5b. 런타임 버그 수정: 01 인트로·제목 소실, 10 캔버스 크기, 08·09 모델 어두움 | builder ×3 | 진행 중 |
+| 5c. 레이아웃 통일: HeroSlot 확장(CTA·패널·스크롤 구간·모바일 순서), 04 터치 기본값 탭 | builder | 대기 (5b 후) |
+| 5d. codex-reviewer(code) + security(의존성) → 커밋·push | 팀장 | 대기 |
 
 ## 메모
 - TypeScript 6.0.3 고정(7.x는 typescript-eslint 미지원)

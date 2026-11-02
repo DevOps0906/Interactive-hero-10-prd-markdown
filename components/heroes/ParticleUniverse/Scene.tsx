@@ -119,10 +119,9 @@ function Particles(props: ParticlesProps) {
           <bufferAttribute attach="attributes-aSize" args={[buffers.size, 1]} />
           <bufferAttribute attach="attributes-aSeed" args={[buffers.seed, 1]} />
         </bufferGeometry>
+        {/* uniforms는 생성자 인자로 넘겨 참조를 공유한다(prop으로 넘기면 R3F가 복사해 매 프레임 갱신이 반영되지 않음). */}
         <shaderMaterial
-          uniforms={uniforms}
-          vertexShader={vertexShader}
-          fragmentShader={fragmentShader}
+          args={[{ uniforms, vertexShader, fragmentShader }]}
           transparent
           depthWrite={false}
           blending={AdditiveBlending}

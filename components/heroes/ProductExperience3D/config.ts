@@ -50,9 +50,9 @@ export const DEFAULT_PRODUCT: ProductData = {
   tagline: "360° 공간 오디오 스피커",
   accent: "#3fd0bd",
   finishes: [
-    { id: "graphite", label: "그래파이트", sku: "AO-GR", price: "249,000원", color: "#2b3038", roughness: 0.42, metalness: 0.7 },
+    { id: "graphite", label: "그래파이트", sku: "AO-GR", price: "249,000원", color: "#5b6573", roughness: 0.42, metalness: 0.6 },
     { id: "silver", label: "실버", sku: "AO-SV", price: "249,000원", color: "#c9ced6", roughness: 0.28, metalness: 0.95 },
-    { id: "teal", label: "미드나잇 틸", sku: "AO-TL", price: "259,000원", color: "#0f5f66", roughness: 0.35, metalness: 0.6 },
+    { id: "teal", label: "미드나잇 틸", sku: "AO-TL", price: "259,000원", color: "#1f8f99", roughness: 0.35, metalness: 0.55 },
     { id: "sand", label: "샌드", sku: "AO-SD", price: "259,000원", color: "#c8b49a", roughness: 0.6, metalness: 0.25 },
   ],
   parts: [
