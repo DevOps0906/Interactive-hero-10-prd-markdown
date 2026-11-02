@@ -10,78 +10,10 @@
   position: relative;
 }
 
-.track {
-  position: relative;
-  height: 220svh;
-}
-
-.sticky {
-  position: sticky;
-  top: var(--size-topbar);
-  height: calc(100svh - var(--size-topbar));
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  gap: calc(var(--spacing) * 3);
-  padding: calc(var(--spacing) * 4);
-}
-
-.text {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: calc(var(--spacing) * 2);
-  max-width: 60ch;
-}
-
-.kicker {
-  font: 500 var(--text-caption) / 1 var(--font-mono);
-  color: var(--hero-accent);
-  letter-spacing: 0.08em;
-}
-
-.title {
-  font-size: var(--text-display);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.desc {
-  color: var(--hero-muted);
-  margin: 0;
-}
-
-.cta {
-  align-self: flex-start;
-  min-height: var(--size-gnb-item);
-  padding-inline: calc(var(--spacing) * 5);
-  background: var(--hero-accent);
-  color: #080b12;
-  border: 0;
-  border-radius: var(--radius-control);
-  font-weight: 600;
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-.cta:hover {
-  transform: translateY(-1px);
-}
-
 .hint {
   color: var(--hero-muted);
   font-size: var(--text-caption);
   margin: 0;
-}
-
-.stageWrap {
-  position: relative;
-  min-height: 0;
-  border: 1px solid var(--hero-line);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  background: var(--hero-bg);
 }
 
 .stage {
@@ -269,34 +201,10 @@
   outline-offset: var(--ring-offset);
 }
 
-/* 태블릿 768~1023 */
+/* 태블릿 768~ : 컨트롤 패널 우측 정렬 */
 @media (width >= 768px) {
-  .sticky {
-    top: 0;
-    height: 100svh;
-    padding: calc(var(--spacing) * 6);
-  }
-  .track {
-    height: 240svh;
-  }
   .controls {
     left: auto;
-  }
-}
-
-/* 데스크톱 1024~ : 이단 구성 (텍스트 좌 · Stage 우 55~70%) */
-@media (width >= 1024px) {
-  .sticky {
-    grid-template-rows: none;
-    grid-template-columns: minmax(0, 4fr) minmax(0, 6.2fr);
-    gap: calc(var(--spacing) * 8);
-    align-items: stretch;
-  }
-  .text {
-    padding-block: calc(var(--spacing) * 8);
-  }
-  .hint {
-    margin-top: calc(var(--spacing) * 6);
   }
 }
 
@@ -304,8 +212,5 @@
   .loader::after {
     animation: none;
     width: 100%;
-  }
-  .cta {
-    transition: none;
   }
 }

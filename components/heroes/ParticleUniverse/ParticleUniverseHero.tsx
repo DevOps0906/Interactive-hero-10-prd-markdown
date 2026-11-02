@@ -182,7 +182,41 @@ export default function ParticleUniverseHero({
 
   return (
     <div ref={rootRef} className="relative" style={tokens} data-state={state}>
-      <HeroSlot hero={hero}>
+      <HeroSlot
+        hero={hero}
+        cta={
+          <>
+            <button
+              type="button"
+              data-pu-cta
+              aria-disabled={!ctaReady}
+              className="btn-primary aria-disabled:opacity-60"
+              onClick={() => {
+                if (ctaReady) setPanelOpen(true);
+              }}
+            >
+              {ctaLabel}
+            </button>
+            <p>드래그 회전 · 마우스 이동 반응 · 패널에서 형태 변환</p>
+          </>
+        }
+        panel={
+          <div className="relative z-10 flex flex-col gap-3 p-6">
+            <Controls
+              open={panelOpen}
+              onOpenChange={setPanelOpen}
+              settings={settings}
+              onChange={update}
+              state={state}
+              stats={stats}
+              reducedMotion={reducedMotion}
+              onNudge={(d) => commandsRef.current?.nudge(d)}
+              onReplay={replay}
+              onRetry={retry}
+            />
+          </div>
+        }
+      >
         <div ref={boxRef} className="relative h-full w-full">
           {failed ? (
             <>
@@ -214,33 +248,6 @@ export default function ParticleUniverseHero({
           )}
         </div>
       </HeroSlot>
-
-      <div className="relative z-10 flex flex-col gap-3 p-6 lg:absolute lg:right-0 lg:bottom-0 lg:w-[22rem] lg:items-end">
-        <button
-          type="button"
-          data-pu-cta
-          aria-disabled={!ctaReady}
-          className="btn-primary self-start lg:self-end aria-disabled:opacity-60"
-          onClick={() => {
-            if (ctaReady) setPanelOpen(true);
-          }}
-        >
-          {ctaLabel}
-        </button>
-        <Controls
-          open={panelOpen}
-          onOpenChange={setPanelOpen}
-          settings={settings}
-          onChange={update}
-          state={state}
-          stats={stats}
-          reducedMotion={reducedMotion}
-          onNudge={(d) => commandsRef.current?.nudge(d)}
-          onReplay={replay}
-          onRetry={retry}
-        />
-        <p className="text-caption text-text-muted lg:text-right">드래그 회전 · 마우스 이동 반응 · 패널에서 형태 변환</p>
-      </div>
 
       <p className="sr-only" role="status" aria-live="polite">
         {STATUS_TEXT[state] ?? ""}

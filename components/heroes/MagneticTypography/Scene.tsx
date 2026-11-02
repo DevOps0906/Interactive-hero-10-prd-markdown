@@ -19,15 +19,14 @@ export function Scene({ stageRef, state }: { stageRef: RefObject<HTMLDivElement 
       </div>
       {state === "loading" && <span className="mt-loading">로딩 중…</span>}
       <style>{`
-        .mt-stage{ position:relative; width:100%; height:100%; display:grid; place-items:center; overflow:hidden;
+        .mt-stage{ position:relative; width:100%; height:100%; display:grid; place-items:center; overflow:hidden; container-type:inline-size;
           --hero-bg:#080b12; --hero-fg:var(--color-text); --hero-accent:var(--color-primary); touch-action:pan-y; }
         .mt-skew{ display:flex; flex-direction:column; align-items:center; transform-origin:50% 50%; }
         .mt-line{ display:flex; justify-content:center; line-height:.95; }
         .mt-char{ display:inline-block; text-align:center; color:var(--hero-fg); will-change:transform;
-          font-family:var(--font-sans); font-size:clamp(40px,11vw,96px); font-weight:700;
+          font-family:var(--font-sans); font-size:clamp(36px,13cqi,168px); font-weight:700;
           --w:260; --wd:100; font-variation-settings:"wght" var(--w), "wdth" var(--wd); }
-        @media (width >= 768px){ .mt-char{ font-size:clamp(56px,9vw,120px); } }
-        @media (width >= 1200px){ .mt-char{ font-size:clamp(88px,10vw,168px); } }
+        /* 스테이지 폭 기준(cqi): 2단 배치에서 가장 긴 줄 MAGNETIC이 굵기 900까지 커져도 잘리지 않게 */
         .mt-stage[data-state="loading"] .mt-char{ opacity:0; }
         .mt-stage[data-state="fallback"] .mt-char{ opacity:1; font-weight:700; }
         .mt-loading{ position:absolute; font:500 var(--text-caption)/1 var(--font-mono); color:var(--hero-accent); }

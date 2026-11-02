@@ -104,7 +104,31 @@ export default function KnowledgeGalaxyHero({ data = DEFAULT_GRAPH }: KnowledgeG
         if (e.key === "Escape") actions.clear();
       }}
     >
-      <HeroSlot hero={hero}>
+      <HeroSlot
+        hero={hero}
+        cta={
+          <>
+            <button type="button" className="btn-primary" disabled={!interactive} onClick={() => actions.select(data.rootId)}>
+              중심 노드 탐색하기
+            </button>
+            <span className={styles.hint}>드래그 회전 · 휠 줌 · 노드 클릭 선택 · Esc 해제</span>
+          </>
+        }
+        panel={
+          <Controls
+            model={model}
+            totalNodes={Math.min(data.nodes.length, preset.maxNodes)}
+            settings={settings}
+            setSettings={setSettings}
+            state={state}
+            actions={actions}
+            stats={stats}
+            tier={tier}
+            reducedMotion={reducedMotion}
+            fallback={fallback}
+          />
+        }
+      >
         <div className={styles.stage}>
           {fallback ? (
             <Fallback model={model} message={state.error ?? "이 환경에서는 3D 그래프를 표시할 수 없어 정적 화면으로 대체했습니다."} />
@@ -149,26 +173,6 @@ export default function KnowledgeGalaxyHero({ data = DEFAULT_GRAPH }: KnowledgeG
           )}
         </div>
       </HeroSlot>
-
-      <div className={styles.cta}>
-        <button type="button" className="btn-primary" disabled={!interactive} onClick={() => actions.select(data.rootId)}>
-          중심 노드 탐색하기
-        </button>
-        <span className={styles.hint}>드래그 회전 · 휠 줌 · 노드 클릭 선택 · Esc 해제</span>
-      </div>
-
-      <Controls
-        model={model}
-        totalNodes={Math.min(data.nodes.length, preset.maxNodes)}
-        settings={settings}
-        setSettings={setSettings}
-        state={state}
-        actions={actions}
-        stats={stats}
-        tier={tier}
-        reducedMotion={reducedMotion}
-        fallback={fallback}
-      />
     </div>
   );
 }

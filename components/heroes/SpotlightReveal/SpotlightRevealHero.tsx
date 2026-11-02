@@ -36,7 +36,67 @@ export default function SpotlightRevealHero({ scenes = DEFAULT_SCENES, ctaLabel 
 
   return (
     <div className={styles.root} style={rootStyle}>
-      <HeroSlot hero={getHero("spotlight-reveal")}>
+      <HeroSlot
+        hero={getHero("spotlight-reveal")}
+        cta={
+          <>
+            <button
+              type="button"
+              className={`btn-primary ${styles.cta}`}
+              disabled={busy}
+              onClick={expand}
+              onPointerEnter={() => ctaHover(true)}
+              onPointerLeave={() => ctaHover(false)}
+              onFocus={() => ctaHover(true)}
+              onBlur={() => ctaHover(false)}
+            >
+              {ctaLabel}
+            </button>
+            <span className={styles.status} role="status">
+              {PHASE_LABEL[phase]}
+              <span className={styles.sr}> · 현재 장면: {base.title}</span>
+            </span>
+            <p className={styles.hint}>
+              마우스 이동 · 터치 탭으로 열기/닫기 · Tab 후 방향키 · <a href="#sr-controls">설정 ↓</a>
+            </p>
+          </>
+        }
+        overlay={
+          <>
+            {/* Stage는 aria-hidden이므로 마스크 뒤 내용을 텍스트로 동등 제공 */}
+            <div className={styles.sr}>
+              <h2>두 장면의 내용</h2>
+              {scenes.map((sc) => (
+                <section key={sc.title}>
+                  <h3>{sc.title}</h3>
+                  <p>{sc.body}</p>
+                  <p>{sc.chips.join(", ")}</p>
+                </section>
+              ))}
+            </div>
+            <div
+              className={styles.pad}
+              tabIndex={0}
+              role="group"
+              aria-label="스포트라이트 키보드 조작: 방향키로 이동, 더하기·빼기로 크기, Enter로 고정"
+              onKeyDown={onKeyDown}
+              onFocus={() => padFocus(true)}
+              onBlur={() => padFocus(false)}
+            />
+          </>
+        }
+        panel={
+          <Controls
+            options={options}
+            onChange={(patch) => setOptions((o) => ({ ...o, ...patch }))}
+            seen={seen}
+            tierLabel={tier}
+            reducedMotion={reducedMotion}
+            onExpand={expand}
+            onReset={reset}
+          />
+        }
+      >
         <Scene
           stageRef={stageRef}
           base={base}
@@ -47,60 +107,6 @@ export default function SpotlightRevealHero({ scenes = DEFAULT_SCENES, ctaLabel 
           showLayers={options.showLayers}
         />
       </HeroSlot>
-
-      {/* Stage는 aria-hidden이므로 마스크 뒤 내용을 텍스트로 동등 제공 */}
-      <div className={styles.sr}>
-        <h2>두 장면의 내용</h2>
-        {scenes.map((sc) => (
-          <section key={sc.title}>
-            <h3>{sc.title}</h3>
-            <p>{sc.body}</p>
-            <p>{sc.chips.join(", ")}</p>
-          </section>
-        ))}
-      </div>
-
-      <div
-        className={styles.pad}
-        tabIndex={0}
-        role="group"
-        aria-label="스포트라이트 키보드 조작: 방향키로 이동, 더하기·빼기로 크기, Enter로 고정"
-        onKeyDown={onKeyDown}
-        onFocus={() => padFocus(true)}
-        onBlur={() => padFocus(false)}
-      />
-
-      <div className={styles.bar}>
-        <button
-          type="button"
-          className={`btn-primary ${styles.cta}`}
-          disabled={busy}
-          onClick={expand}
-          onPointerEnter={() => ctaHover(true)}
-          onPointerLeave={() => ctaHover(false)}
-          onFocus={() => ctaHover(true)}
-          onBlur={() => ctaHover(false)}
-        >
-          {ctaLabel}
-        </button>
-        <span className={styles.status} role="status">
-          {PHASE_LABEL[phase]}
-          <span className={styles.sr}> · 현재 장면: {base.title}</span>
-        </span>
-        <p className={styles.hint}>
-          마우스 이동 · 터치 드래그 · Tab 후 방향키 · <a href="#sr-controls">설정 ↓</a>
-        </p>
-      </div>
-
-      <Controls
-        options={options}
-        onChange={(patch) => setOptions((o) => ({ ...o, ...patch }))}
-        seen={seen}
-        tierLabel={tier}
-        reducedMotion={reducedMotion}
-        onExpand={expand}
-        onReset={reset}
-      />
     </div>
   );
 }

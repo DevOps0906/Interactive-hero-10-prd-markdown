@@ -69,11 +69,11 @@ export function Controls({
   };
 
   return (
-    <div className="flex w-full flex-col gap-2 lg:items-end" onKeyDown={onKeyDown}>
+    <div className="flex w-full flex-col gap-2 items-start" onKeyDown={onKeyDown}>
       <button
         ref={toggleRef}
         type="button"
-        className={`${btn} order-1 lg:order-2 lg:self-end`}
+        className={`${btn} order-1`}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => onOpenChange(!open)}
@@ -85,7 +85,7 @@ export function Controls({
         id={panelId}
         aria-label="Particle Universe 설정"
         hidden={!open}
-        className="grid w-full max-w-[20rem] gap-4 rounded-card border border-border bg-surface p-4 text-caption text-text order-2 lg:order-1"
+        className="grid w-full max-w-[20rem] gap-4 rounded-card border border-border bg-surface p-4 text-caption text-text order-2"
       >
         <h2 ref={headingRef} tabIndex={-1} className="text-body font-semibold outline-none">
           데모 조작

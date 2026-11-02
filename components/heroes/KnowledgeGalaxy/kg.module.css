@@ -1,4 +1,4 @@
-/* Knowledge Galaxy 레이아웃: 공용 .hero 규칙 위에 이 히어로 범위에서만 덮어쓴다. 색·크기는 토큰 사용. */
+/* Knowledge Galaxy: 배치는 HeroSlot 정본을 따른다. 여기서는 토큰과 스테이지 내부만 정의. */
 .root {
   position: relative;
   --hero-bg: #080b12;
@@ -9,53 +9,7 @@
   --hero-muted: #9aa7bd;
 }
 
-/* 모바일 (<768): 텍스트 먼저, 캔버스 다음 */
-.root :global(.hero) {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 0;
-}
-.root :global(.hero-text) { order: 1; }
-.root :global(.hero-stage) {
-  order: 2;
-  position: relative;
-  inset: auto;
-  height: 60svh;
-  min-height: 340px;
-  border: 0;
-  padding: 0;
-  display: block;
-  background: var(--hero-bg);
-}
-.cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: calc(var(--spacing) * 3);
-  padding: 0 calc(var(--spacing) * 6) calc(var(--spacing) * 4);
-}
-.hint { font: 400 var(--text-caption) / 1.4 var(--font-mono); color: var(--color-text-muted); }
-
-/* 태블릿 (768~1023): 위 캔버스, 아래 텍스트 */
-@media (width >= 768px) {
-  .root :global(.hero) { display: grid; align-content: end; min-height: 100svh; }
-  .root :global(.hero-stage) {
-    position: absolute;
-    inset: calc(var(--spacing) * 6) calc(var(--spacing) * 6) 42%;
-    height: auto;
-    min-height: 0;
-  }
-  .root :global(.hero-text) { padding-bottom: calc(var(--spacing) * 16); }
-  .cta { position: absolute; left: calc(var(--spacing) * 6); bottom: calc(var(--spacing) * 6); padding: 0; }
-}
-
-/* 데스크톱 (>=1024): 좌 텍스트, 우 스테이지(뷰포트 55~75%) */
-@media (width >= 1024px) {
-  .root :global(.hero) { align-content: center; }
-  .root :global(.hero-stage) { inset: calc(var(--spacing) * 6) calc(var(--spacing) * 6) calc(var(--spacing) * 6) 40%; }
-  .root :global(.hero-text) { padding-bottom: calc(var(--spacing) * 16); max-width: 34rem; }
-}
+.hint { font: 400 var(--text-caption) / 1.4 var(--font-mono); color: var(--hero-muted); }
 
 .stage { position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-card); background: radial-gradient(120% 90% at 50% 40%, #0e1422 0%, var(--hero-bg) 70%); }
 .labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }

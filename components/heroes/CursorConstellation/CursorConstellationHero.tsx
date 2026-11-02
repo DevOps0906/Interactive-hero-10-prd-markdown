@@ -33,31 +33,33 @@ export default function CursorConstellationHero({
   const onChange = useCallback((patch: Partial<HeroSettings>) => setSettings((s) => ({ ...s, ...patch })), []);
 
   return (
-    <>
-      <div className="relative [&_.hero]:pb-24">
-        <HeroSlot hero={getHero("cursor-constellation")}>
-          <Scene
-            settings={settings}
-            brandText={brandText}
-            reduced={reduced}
-            phase={phase}
-            commandsRef={commandsRef}
-            onPhase={setPhase}
-            onStats={setStats}
-          />
-        </HeroSlot>
-        <a href={ctaHref} className="btn-primary absolute bottom-6 left-6 inline-flex items-center">
+    <HeroSlot
+      hero={getHero("cursor-constellation")}
+      cta={
+        <a href={ctaHref} className="btn-primary inline-flex items-center">
           {ctaLabel}
         </a>
-      </div>
-      <Controls
+      }
+      panel={
+        <Controls
+          settings={settings}
+          onChange={onChange}
+          phase={phase}
+          stats={stats}
+          reduced={reduced}
+          commandsRef={commandsRef}
+        />
+      }
+    >
+      <Scene
         settings={settings}
-        onChange={onChange}
-        phase={phase}
-        stats={stats}
+        brandText={brandText}
         reduced={reduced}
+        phase={phase}
         commandsRef={commandsRef}
+        onPhase={setPhase}
+        onStats={setStats}
       />
-    </>
+    </HeroSlot>
   );
 }

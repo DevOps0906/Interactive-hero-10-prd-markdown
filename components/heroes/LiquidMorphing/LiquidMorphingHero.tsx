@@ -43,7 +43,27 @@ export default function LiquidMorphingHero({
 
   return (
     <div className={styles.root} style={vars}>
-      <HeroSlot hero={getHero("liquid-morphing")}>
+      <HeroSlot
+        hero={getHero("liquid-morphing")}
+        cta={
+          <a className="btn-primary inline-flex items-center no-underline" href={ctaHref}>
+            {ctaLabel}
+          </a>
+        }
+        panel={
+          <Controls
+            settings={h.settings}
+            update={h.update}
+            state={showFallback ? "fallback" : h.state}
+            tier={h.tier}
+            reduced={h.reduced}
+            stats={h.stats}
+            onPreset={h.runPreset}
+            onReplayIntro={h.replayIntro}
+            onPulse={h.pulse}
+          />
+        }
+      >
         <div ref={stageRef} className={styles.stage}>
           {h.mounted && !showFallback ? (
             <Scene
@@ -87,22 +107,6 @@ export default function LiquidMorphingHero({
           ) : null}
         </div>
       </HeroSlot>
-      <div className={styles.cta}>
-        <a className="btn-primary" href={ctaHref}>
-          {ctaLabel}
-        </a>
-      </div>
-      <Controls
-        settings={h.settings}
-        update={h.update}
-        state={showFallback ? "fallback" : h.state}
-        tier={h.tier}
-        reduced={h.reduced}
-        stats={h.stats}
-        onPreset={h.runPreset}
-        onReplayIntro={h.replayIntro}
-        onPulse={h.pulse}
-      />
     </div>
   );
 }

@@ -131,8 +131,8 @@ main{ min-width:0; }
 .shell .gnb-item{ justify-content:center; padding-inline:0; }
 .shell .gnb-item .label{ position:absolute; left:calc(100% + var(--spacing)*2); padding:calc(var(--spacing)*1.5) calc(var(--spacing)*3);
   background:var(--color-surface); color:var(--color-text); border:1px solid var(--color-border); border-radius:var(--radius-control);
-  opacity:0; pointer-events:none; transition:opacity var(--dur-fast) var(--ease-out); }
-.shell .gnb-item:hover .label, .shell .gnb-item:focus-visible .label{ opacity:1; }
+  opacity:0; visibility:hidden; pointer-events:none; transition:opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast); }
+.shell .gnb-item:hover .label, .shell .gnb-item:focus-visible .label{ opacity:1; visibility:visible; transition-delay:0s; }
 .shell .gnb-list{ overflow:visible; }
 }
 /* 데스크톱 1200~: 펼침, 접기 가능 */
@@ -147,22 +147,44 @@ main{ min-width:0; }
 .shell[data-collapsed="true"] .gnb-item{ justify-content:center; padding-inline:0; }
 .shell[data-collapsed="true"] .gnb-item .label{ position:absolute; left:calc(100% + var(--spacing)*2); padding:calc(var(--spacing)*1.5) calc(var(--spacing)*3);
   background:var(--color-surface); color:var(--color-text); border:1px solid var(--color-border); border-radius:var(--radius-control);
-  opacity:0; pointer-events:none; transition:opacity var(--dur-fast) var(--ease-out); }
-.shell[data-collapsed="true"] .gnb-item:hover .label, .shell[data-collapsed="true"] .gnb-item:focus-visible .label{ opacity:1; }
+  opacity:0; visibility:hidden; pointer-events:none; transition:opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast); }
+.shell[data-collapsed="true"] .gnb-item:hover .label, .shell[data-collapsed="true"] .gnb-item:focus-visible .label{ opacity:1; visibility:visible; transition-delay:0s; }
 .shell[data-collapsed="true"] .gnb-list{ overflow:visible; }
   .shell[data-collapsed="true"] .gnb-head .btn-collapse{ display:inline-flex; }
 }
 
-/* 히어로 슬롯 (풀블리드) */
-.hero{ min-height:calc(100svh - var(--size-topbar)); display:grid; align-content:end; gap:calc(var(--spacing)*4); padding:calc(var(--spacing)*6);
-  background:var(--color-bg); position:relative; overflow:hidden; }
-@media (width >= 768px){ .hero{ min-height:100svh; } }
-.hero-stage{ position:absolute; inset:calc(var(--spacing)*6) calc(var(--spacing)*6) 40%; border:1px dashed var(--color-border);
-  border-radius:var(--radius-card); display:grid; place-items:center; color:var(--color-text-muted); font-size:var(--text-caption); text-align:center; padding:calc(var(--spacing)*4); }
-.hero-text{ position:relative; max-width:64ch; }
-.hero .kicker{ font:500 var(--text-caption)/1 var(--font-mono); color:var(--color-primary); }
+/* 히어로 슬롯 (풀블리드). 배치 정본:
+   >=1024 글(왼쪽) / 스테이지(오른쪽) 2단, <1024 글 → 스테이지 → (패널은 섹션 아래).
+   색은 히어로가 --hero-bg/fg/accent 를 주입하면 따르고, 없으면 셸 토큰을 쓴다. */
+.hero{ position:relative; overflow:hidden; background:var(--hero-bg, var(--color-bg)); color:var(--hero-fg, var(--color-text)); }
+.hero-pin{ min-height:calc(100svh - var(--size-topbar)); display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:auto minmax(0,1fr);
+  gap:calc(var(--spacing)*6); padding:calc(var(--spacing)*6); }
+.hero-copy{ position:relative; max-width:64ch; align-self:start; }
+.hero-text{ position:relative; }
+.hero .kicker{ font:500 var(--text-caption)/1 var(--font-mono); color:var(--hero-accent, var(--color-primary)); }
 .hero h1{ font-size:var(--text-display); line-height:1.15; margin:calc(var(--spacing)*2) 0; letter-spacing:-.02em; }
-.hero p{ color:var(--color-text-muted); margin:0 0 calc(var(--spacing)*4); }
+.hero-text p{ color:color-mix(in srgb, var(--hero-fg, var(--color-text)) 70%, transparent); margin:0 0 calc(var(--spacing)*4); }
+.hero-cta{ display:flex; flex-wrap:wrap; align-items:center; gap:calc(var(--spacing)*3) calc(var(--spacing)*5); }
+.hero[data-scroll="true"] .hero-copy{ min-height:14rem; }
+.hero[data-scroll="true"] .hero-stagebox{ min-height:240px; }
+.hero-cta p{ margin:0; font-size:var(--text-caption); }
+.hero-extra{ position:absolute; inset:0; pointer-events:none; }
+.hero-stagebox{ position:relative; min-height:max(340px, 55svh); border:1px solid var(--color-border); border-radius:var(--radius-card); overflow:hidden; }
+.hero-stage{ position:absolute; inset:0; display:block; }
+.hero-stage[data-placeholder="true"]{ display:grid; place-items:center; border:1px dashed var(--color-border); border-radius:var(--radius-card);
+  color:var(--color-text-muted); font-size:var(--text-caption); text-align:center; padding:calc(var(--spacing)*4); }
+.hero-overlay{ position:absolute; inset:0; pointer-events:none; }
+:where(.hero-overlay > *){ pointer-events:auto; }
+@media (width >= 768px){ .hero-pin{ min-height:100svh; } }
+@media (width >= 1024px){
+  .hero-pin{ grid-template-columns:minmax(0,5fr) minmax(0,7fr); grid-template-rows:minmax(0,1fr); gap:calc(var(--spacing)*8); padding:calc(var(--spacing)*8); align-items:stretch; }
+  .hero-copy{ align-self:center; }
+  .hero-stagebox{ min-height:0; }
+}
+/* 스크롤 구간(sticky): 섹션이 트랙, .hero-pin 이 고정된다. overflow:hidden 은 sticky 를 깨므로 푼다. */
+.hero[data-scroll="true"]{ overflow:visible; height:calc(var(--hero-span, 4)*100svh); }
+.hero[data-scroll="true"] .hero-pin{ position:sticky; top:var(--size-topbar); height:calc(100svh - var(--size-topbar)); min-height:0; overflow:hidden; }
+@media (width >= 768px){ .hero[data-scroll="true"] .hero-pin{ top:0; height:100svh; } }
 .btn-primary{ height:var(--size-gnb-item); padding-inline:calc(var(--spacing)*5); background:var(--color-primary); color:var(--color-primary-fg);
   border:0; border-radius:var(--radius-control); font-weight:600; }
 .btn-primary:hover{ filter:brightness(1.08); }

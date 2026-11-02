@@ -1,26 +1,8 @@
 /* 토큰: --hero-bg/fg/accent/speed/intensity 는 루트 style 로 주입, 나머지는 app/globals.css 토큰 */
 .root { background: var(--hero-bg); color: var(--hero-fg); }
 
-/* HeroSlot 스테이지 덮어쓰기(점선 placeholder 제거) — 모바일: 텍스트 먼저, 캔버스 다음 */
-.root :global(.hero) { background: var(--hero-bg); }
-.root :global(.hero-text) { order: -1; padding-bottom: calc(var(--spacing) * 16); }
-.root :global(.hero-stage) {
-  position: relative; inset: auto; order: 2; border: 0; padding: 0; border-radius: var(--radius-card);
-  min-height: 52svh; display: block; overflow: hidden;
-}
+/* 배치는 HeroSlot 정본을 따른다. 스테이지 내부만 정의. */
 .stage { position: absolute; inset: 0; }
-.cta { position: relative; z-index: 3; margin-top: calc(var(--spacing) * -20); padding-inline: calc(var(--spacing) * 6); height: var(--size-gnb-item); display: flex; }
-.cta a { display: inline-flex; align-items: center; text-decoration: none; }
-
-/* 태블릿 768~1023: 상단 스테이지(기본 셸 배치) */
-@media (width >= 768px) {
-  .root :global(.hero-stage) { position: absolute; inset: calc(var(--spacing) * 6) calc(var(--spacing) * 6) 42%; min-height: 0; }
-  .cta { margin-top: calc(var(--spacing) * -20); }
-}
-/* 데스크톱 ≥1024: 좌 텍스트 / 우 스테이지(55~75%) */
-@media (width >= 1024px) {
-  .root :global(.hero-stage) { inset: calc(var(--spacing) * 6) calc(var(--spacing) * 6) calc(var(--spacing) * 6) 38%; }
-}
 
 .loader, .fallback { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: calc(var(--spacing) * 3); text-align: center; font-size: var(--text-caption); color: var(--color-text-muted); }
 .loader { pointer-events: none; transition: opacity var(--dur-base) var(--ease-out); }

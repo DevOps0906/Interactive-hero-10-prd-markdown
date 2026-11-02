@@ -31,7 +31,7 @@ export const DEFAULT_OPTIONS: SpotlightOptions = {
   intensity: 0.6,
   accent: "#3fd0bd",
   distortion: true,
-  touchMode: "drag",
+  touchMode: "toggle",
   showLayers: false,
 };
 

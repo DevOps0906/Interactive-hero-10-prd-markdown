@@ -39,18 +39,22 @@ export default function KineticTypeHero({ content = DEFAULT_CONTENT }: { content
   return (
     <>
       <div ref={rootRef} className="relative" style={tokens} data-state={state} data-tier={tier}>
-        <HeroSlot hero={getHero("kinetic-type")}>
+        <HeroSlot
+          hero={getHero("kinetic-type")}
+          cta={
+            <>
+              <a href={content.ctaHref} className="btn-primary inline-flex items-center no-underline">{content.ctaLabel}</a>
+              <p role="status" className="m-0 font-mono">
+                {STATE_LABEL[state]}{!fallback && state !== "loading" ? ` · ${tier}` : ""}
+              </p>
+              <p className="m-0 hidden md:block">
+                {reduced ? "모션 감소 설정: 정적 화면" : "스크롤하여 장면 전환 · 마우스를 움직여 보세요"}
+              </p>
+            </>
+          }
+        >
           <Scene content={content} state={state} tier={tier} reduced={reduced} copies={copies} titleRef={titleRef} nextRef={nextRef} />
         </HeroSlot>
-        <p role="status" className="pointer-events-none absolute left-8 top-8 z-10 m-0 rounded-[var(--radius-control)] bg-[var(--color-surface)] px-2 py-1 font-mono text-[length:var(--text-caption)] text-[var(--color-text-muted)]">
-          {STATE_LABEL[state]}{!fallback && state !== "loading" ? ` · ${tier}` : ""}
-        </p>
-        <div className="absolute bottom-6 right-6 z-10 max-md:bottom-auto max-md:top-8">
-          <a href={content.ctaHref} className="btn-primary inline-flex items-center no-underline">{content.ctaLabel}</a>
-        </div>
-        <p className="pointer-events-none absolute bottom-6 left-1/2 z-10 m-0 hidden -translate-x-1/2 text-[length:var(--text-caption)] text-[var(--color-text-muted)] md:block">
-          {reduced ? "모션 감소 설정: 정적 화면" : "스크롤하여 장면 전환 · 마우스를 움직여 보세요"}
-        </p>
       </div>
       <Controls options={options} onChange={setOptions} onReplay={replayReveal} disabled={fallback} />
     </>

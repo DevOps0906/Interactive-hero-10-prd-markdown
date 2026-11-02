@@ -10,45 +10,6 @@
   color: var(--hero-fg);
 }
 
-/* ---- HeroSlot 레이아웃 오버라이드 (모바일·태블릿: 텍스트 먼저, Stage 다음) ---- */
-.root :global(.hero) {
-  background: var(--hero-bg);
-  align-content: start;
-  padding-bottom: calc(var(--spacing) * 24);
-}
-.root :global(.hero h1) {
-  color: var(--hero-fg);
-}
-.root :global(.hero p) {
-  color: color-mix(in srgb, var(--hero-fg) 70%, transparent);
-}
-.root :global(.hero .kicker) {
-  color: var(--hero-accent);
-}
-.root :global(.hero-stage) {
-  inset: auto calc(var(--spacing) * 6) calc(var(--spacing) * 24) calc(var(--spacing) * 6);
-  height: min(50svh, 520px);
-  display: block;
-  padding: 0;
-  overflow: hidden;
-  background: var(--hero-bg);
-  border: 1px solid color-mix(in srgb, var(--hero-fg) 16%, transparent);
-  color: var(--hero-fg);
-  text-align: left;
-}
-@media (width >= 1024px) {
-  .root :global(.hero) {
-    align-content: center;
-  }
-  .root :global(.hero-stage) {
-    inset: calc(var(--spacing) * 6) calc(var(--spacing) * 6) calc(var(--spacing) * 24) 44%;
-    height: auto;
-  }
-  .root :global(.hero-text) {
-    max-width: min(44ch, 38%);
-  }
-}
-
 /* ---- Stage ---- */
 .stage {
   --mx: 50%;
@@ -190,18 +151,7 @@
   font-size: calc(var(--text-display) * 1.4);
 }
 
-/* ---- CTA 줄 · 키보드 패드 ---- */
-.bar {
-  position: absolute;
-  left: calc(var(--spacing) * 6);
-  right: calc(var(--spacing) * 6);
-  bottom: calc(var(--spacing) * 6);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: calc(var(--spacing) * 3) calc(var(--spacing) * 5);
-  z-index: 2;
-}
+/* ---- CTA · 키보드 패드 ---- */
 .cta {
   background: var(--hero-accent);
   color: var(--hero-bg);

@@ -1,24 +1,14 @@
 .root { --hero-bg: #080b12; --hero-fg: #eef0f3; --hero-accent: #3fd0bd; --hero-speed: 1; --hero-intensity: 1;
-  background: var(--hero-bg); color: var(--hero-fg); position: relative; }
-.track { position: relative; height: calc(var(--chapters) * 100svh); }
-.stage { position: sticky; top: var(--size-topbar); height: calc(100svh - var(--size-topbar)); overflow: hidden; display: grid; grid-template-rows: 1fr; }
-@media (width >= 768px) { .stage { top: 0; height: 100svh; } }
-
+  background: var(--hero-bg); color: var(--hero-fg); }
 .canvas { position: absolute; inset: 0; }
-/* 모바일: 텍스트 먼저(상단), 캔버스는 하단 */
-.canvas { top: 42%; }
-@media (width >= 1024px) { .canvas { top: 0; left: 38%; } }
-@media (width >= 768px) and (width < 1024px) { .canvas { top: 46%; } }
 
 .loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: var(--text-caption); color: var(--color-text-muted); pointer-events: none; }
 .spinner { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--color-border); border-top-color: var(--hero-accent); animation: spin 0.9s linear infinite; margin: 0 auto 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
 
-.text { position: relative; z-index: 1; align-self: start; padding: calc(var(--spacing) * 6); max-width: 520px; pointer-events: none; }
-.layers { position: relative; min-height: 220px; }
 .layer { position: absolute; inset: 0 auto auto 0; opacity: 0; max-width: 46ch; }
-.layer h1, .layer h2 { font-size: var(--text-display); line-height: 1.15; margin: calc(var(--spacing) * 2) 0; letter-spacing: -0.02em; }
+.layer h2 { font-size: var(--text-display); line-height: 1.15; margin: calc(var(--spacing) * 2) 0; letter-spacing: -0.02em; }
 .layer p { color: var(--color-text-muted); margin: 0 0 calc(var(--spacing) * 4); }
 .kicker { font: 500 var(--text-caption) / 1 var(--font-mono); color: var(--hero-accent); }
 .cta { pointer-events: auto; background: var(--hero-accent); color: #080b12; }
@@ -41,10 +31,8 @@
 .help { margin: 0; padding-left: 16px; color: var(--color-text-muted); }
 
 /* 정적(폴백·reduced-motion) 페이지 */
+.still { width: 100%; height: 100%; object-fit: contain; }
 .static { padding: calc(var(--spacing) * 6); display: grid; gap: calc(var(--spacing) * 8); max-width: 960px; }
-.static img { width: 100%; height: auto; border-radius: var(--radius-card); border: 1px solid var(--color-border); }
 .static section h2 { font-size: var(--text-h2); margin: calc(var(--spacing) * 2) 0; }
 .static section p { color: var(--color-text-muted); margin: 0; }
-.static h1 { font-size: var(--text-display); line-height: 1.15; margin: calc(var(--spacing) * 2) 0; }
-.static .cta { display: inline-grid; place-items: center; text-decoration: none; pointer-events: auto; }
 .notice { color: var(--color-text-muted); font-size: var(--text-caption); margin: 0; }

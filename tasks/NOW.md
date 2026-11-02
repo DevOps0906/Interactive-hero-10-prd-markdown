@@ -15,14 +15,16 @@
 | 3. Next.js 셸: GNB + 10개 라우트 + 히어로 자리 (브랜치 feat/hero-dashboard) | builder | 완료 (커밋 57ded19, build·lint·10라우트 200) |
 | 4. 히어로 10개 병렬 구현 (각 PRD P0~P5, 폴더 분리) | builder ×10 | 완료 (커밋 76e2bad) |
 | 5a. 통합 검증 1차: build·lint 통과, 10라우트 콘솔 오류 0 | 팀장 | 완료 |
-| 5b. 런타임 버그 수정: 01 인트로·제목 소실, 10 캔버스 크기, 08·09 모델 어두움 | builder ×3 | 진행 중 |
-| 5c. 레이아웃 통일: HeroSlot 확장(CTA·패널·스크롤 구간·모바일 순서), 04 터치 기본값 탭 | builder | 대기 (5b 후) |
+| 5b. 런타임 버그 수정: 01 인트로·제목 소실, 10 캔버스 크기, 08·09 모델 어두움 | builder ×3 + 팀장 | 완료 (커밋 0a8eeb8, 브라우저 확인) |
+| 5c. 레이아웃 통일: HeroSlot 확장(CTA·패널·스크롤 구간·모바일 순서), 04 터치 기본값 탭 | builder | 진행 중 |
 | 5d. codex-reviewer(code) + security(의존성) → 커밋·push | 팀장 | 대기 |
 
 ## 메모
 - TypeScript 6.0.3 고정(7.x는 typescript-eslint 미지원)
 - 웹폰트: Pretendard 1.3.9(npm, next/font/local) + JetBrains Mono(next/font/google) 적용 — 미커밋, 통합 빌드 때 확인
-- npm audit moderate 15건 — 통합 검증 때 확인
+- npm audit: 운영 의존성 0건, 개발 의존성 moderate 15건(배포 번들 무관)
+- 라이선스: three·R3F·drei MIT, Pretendard OFL-1.1, GSAP는 Standard "No Charge" 라이선스(OSI 아님, 상업 무료)
+- 자동화 브라우저 탭은 백그라운드 시 rAF 1.5fps로 스로틀됨 → 인트로는 벽시계 기준 종료 필요
 
 ## 남은 일
 - `nomad-doctor . --fix` 미실행(자동 모드 차단) → 사용자가 `!`로 직접 실행 필요

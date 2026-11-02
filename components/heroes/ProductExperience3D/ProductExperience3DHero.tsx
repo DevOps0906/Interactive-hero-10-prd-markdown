@@ -19,7 +19,10 @@ export default function ProductExperience3DHero({ product = DEFAULT_PRODUCT }: {
 
   return (
     <div className={styles.root} style={vars}>
-      <HeroSlot hero={getHero("3d-product-experience")}>
+      <HeroSlot
+        hero={getHero("3d-product-experience")}
+        panel={<Controls product={product} state={state} actions={actions} reduced={reduced} tier={tier} fpsRef={fpsRef} />}
+      >
         <div className={styles.stage}>
           {fallback ? (
             <div className={styles.fallback}>
@@ -39,7 +42,6 @@ export default function ProductExperience3DHero({ product = DEFAULT_PRODUCT }: {
           <p className={styles.hint}>드래그로 회전 · 휠/핀치로 확대 · ↓ 아래에서 옵션 조절</p>
         </div>
       </HeroSlot>
-      <Controls product={product} state={state} actions={actions} reduced={reduced} tier={tier} fpsRef={fpsRef} />
     </div>
   );
 }

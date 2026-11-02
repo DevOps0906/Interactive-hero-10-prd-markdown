@@ -29,11 +29,9 @@ export default function MagneticTypographyHero({ ctaLabel = "효과 설정 열�
   });
 
   return (
-    <>
-      <HeroSlot hero={getHero("magnetic-typography")}>
-        <Scene stageRef={stageRef} state={state} />
-      </HeroSlot>
-      <div className="flex flex-col items-center gap-6 px-4 py-8 md:px-6" id="mt-controls">
+    <HeroSlot
+      hero={getHero("magnetic-typography")}
+      cta={
         <button
           ref={buttonRef}
           type="button"
@@ -44,19 +42,25 @@ export default function MagneticTypographyHero({ ctaLabel = "효과 설정 열�
             {ctaLabel}
           </span>
         </button>
-        <Controls
-          options={options}
-          onChange={setOptions}
-          onReset={() => setOptions(DEFAULT_OPTIONS)}
-          onReplay={replayIntro}
-          onTap={simulateTap}
-          state={state}
-          tier={tier}
-          fps={fps}
-          axis={axis}
-          reducedMotion={reducedMotion}
-        />
-      </div>
-    </>
+      }
+      panel={
+        <div className="px-4 py-8 md:px-6" id="mt-controls">
+          <Controls
+            options={options}
+            onChange={setOptions}
+            onReset={() => setOptions(DEFAULT_OPTIONS)}
+            onReplay={replayIntro}
+            onTap={simulateTap}
+            state={state}
+            tier={tier}
+            fps={fps}
+            axis={axis}
+            reducedMotion={reducedMotion}
+          />
+        </div>
+      }
+    >
+      <Scene stageRef={stageRef} state={state} />
+    </HeroSlot>
   );
 }
