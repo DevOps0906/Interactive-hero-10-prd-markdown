@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import {
   CHART_ROWS,
   DEFAULT_TOOTH_ID,
@@ -37,6 +38,8 @@ export function focusAppointment() {
 /** 선택 상태 요약(스테이지 위 카드 / 모바일 바텀시트). 3D와 같은 state 에서 렌더링. */
 export function Summary({ state, actions, data }: Pick<PanelProps, "state" | "actions" | "data">) {
   const id = state.selectedId;
+  const focusTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(focusTimer.current), []);
   if (!id) return null;
   const tooth = TEETH_BY_ID[id];
   const info = KIND_INFO[tooth.kind];
@@ -44,7 +47,8 @@ export function Summary({ state, actions, data }: Pick<PanelProps, "state" | "ac
   const doctor = data.doctors.find((d) => d.procedureId === state.procedureId);
   const close = () => {
     actions.select(null);
-    window.setTimeout(() => document.getElementById(`tooth-btn-${id}`)?.focus(), 0);
+    window.clearTimeout(focusTimer.current);
+    focusTimer.current = window.setTimeout(() => document.getElementById(`tooth-btn-${id}`)?.focus(), 0);
   };
   return (
     <aside className={styles.summary} role="region" aria-label="선택한 치아 요약">

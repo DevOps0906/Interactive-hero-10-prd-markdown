@@ -139,6 +139,7 @@ export function useConfigurator(cartAdapter: CartAdapter = demoCartAdapter) {
   useEffect(() => {
     stateRef.current = state;
   });
+  const pendingRef = useRef(false);
   const alive = useRef(true);
   useEffect(() => {
     alive.current = true;
@@ -200,7 +201,7 @@ export function useConfigurator(cartAdapter: CartAdapter = demoCartAdapter) {
       },
       addToCart: async () => {
         const s = stateRef.current;
-        if (s.pending) return;
+        if (pendingRef.current) return;
         const v = resolveVariant(s.config);
         track("hero_cta_click", { sku: v.sku });
         if (v.stock <= 0) {
@@ -208,6 +209,7 @@ export function useConfigurator(cartAdapter: CartAdapter = demoCartAdapter) {
           return;
         }
         const existing = s.cart.find((l) => l.sku === v.sku);
+        pendingRef.current = true;
         dispatch({ type: "pending", value: true });
         try {
           await cartAdapter.add(v.sku, s.config.size, existing?.qty ?? 0, v.stock);
@@ -221,6 +223,7 @@ export function useConfigurator(cartAdapter: CartAdapter = demoCartAdapter) {
         } catch (e) {
           if (alive.current) dispatch({ type: "notice", kind: "error", text: e instanceof Error ? e.message : "장바구니 담기에 실패했습니다." });
         } finally {
+          pendingRef.current = false;
           if (alive.current) dispatch({ type: "pending", value: false });
         }
       },

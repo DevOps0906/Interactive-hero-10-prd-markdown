@@ -88,12 +88,13 @@ export function useJourneyState(services: ServiceData[]) {
       const id = window.location.hash.startsWith(HASH) ? window.location.hash.slice(HASH.length) : null;
       const found = services.find((s) => s.id === id);
       if (found) dispatch({ type: "service", id: found.id, push });
+      else if (id === null) dispatch({ type: "service", id: first, push }); // 해시 없는 URL → 기본 선택(리듀서가 동일 값이면 무시)
     };
     read(false);
     const onPop = () => read(false);
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, [services]);
+  }, [services, first]);
 
   const actions = useMemo(
     () => ({

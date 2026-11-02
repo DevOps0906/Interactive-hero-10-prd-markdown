@@ -54,9 +54,12 @@ export default function Overlay({ state, actions, onInquiry }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, tourStep, close, actions]);
 
+  const noteTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(noteTimer.current), []);
   const say = (m: string) => {
     setNote(m);
-    window.setTimeout(() => setNote(""), 3500);
+    window.clearTimeout(noteTimer.current);
+    noteTimer.current = window.setTimeout(() => setNote(""), 3500);
   };
   const fullscreen = () => {
     const box = rootRef.current?.closest(".hero-stagebox") as HTMLElement | null;

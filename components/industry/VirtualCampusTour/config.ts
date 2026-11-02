@@ -135,9 +135,9 @@ export const QUALITY_PRESETS: Record<QualityTier, { dpr: number; shadows: boolea
 
 export const VIEW_LABEL: Record<ViewMode, string> = { orbit: "자유 탐색(Orbit)", preset: "프리셋 이동(Walk)" };
 
-/** 측정 이벤트(개인정보 제외). 외부 수집기는 window 'hero-event' 를 구독한다. */
+/** 측정 이벤트(개인정보 제외). 외부 수집기는 window 'hero:event' 를 구독한다. */
 export type HeroEventName = "hero_view" | "hero_interact" | "hero_select" | "hero_cta_click" | "lead_submit";
 export function track(name: HeroEventName, detail: Record<string, string | number | boolean> = {}) {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("hero-event", { detail: { name, hero: "academy-virtual-campus", ...detail } }));
+  window.dispatchEvent(new CustomEvent("hero:event", { detail: { name, hero: "academy-virtual-campus", ...detail } }));
 }

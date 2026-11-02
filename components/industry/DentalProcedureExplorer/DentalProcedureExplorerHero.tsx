@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type CSSProperties, type KeyboardEvent } from "react";
+import { useEffect, useRef, type CSSProperties, type KeyboardEvent } from "react";
 import dynamic from "next/dynamic";
 import { HeroSlot } from "@/components/shell/HeroSlot";
 import { getIndustryHero } from "@/lib/hero/registry";
@@ -19,6 +19,8 @@ const Scene = dynamic(() => import("./Scene"), { ssr: false });
 export default function DentalProcedureExplorerHero({ data = DEMO_DATA }: { data?: DentalData }) {
   const { state, actions, reduced, tier, fpsRef } = useExplorer();
   const stageRef = useRef<HTMLDivElement>(null);
+  const focusTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(focusTimer.current), []);
   const fallback = state.phase === "fallback";
   const loading = state.phase === "loading";
 
@@ -28,7 +30,8 @@ export default function DentalProcedureExplorerHero({ data = DEMO_DATA }: { data
     if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
     const id = state.selectedId;
     actions.select(null);
-    window.setTimeout(() => document.getElementById(`tooth-btn-${id}`)?.focus(), 0);
+    window.clearTimeout(focusTimer.current);
+    focusTimer.current = window.setTimeout(() => document.getElementById(`tooth-btn-${id}`)?.focus(), 0);
   };
 
   const fullscreen = () => {

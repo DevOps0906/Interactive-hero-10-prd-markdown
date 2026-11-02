@@ -18,7 +18,7 @@ const noopSubscribe = () => () => undefined;
 
 /** 측정 이벤트: 개인정보 없이 window 이벤트로만 내보낸다(분석 도구 연결 지점). */
 const track: Track = (name, payload) => {
-  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("hero-event", { detail: { hero: hero.slug, name, ...payload } }));
+  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("hero:event", { detail: { hero: hero.slug, name, ...payload } }));
 };
 
 /** services: 외부 데이터 adapter 주입 지점(미지정 시 데모 mockData). */

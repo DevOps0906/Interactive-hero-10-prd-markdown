@@ -116,10 +116,10 @@ export interface ExplorerActions {
   downgrade(tier: QualityTier): void;
 }
 
-/** 측정 이벤트(개인정보 제외). 분석 SDK 는 window 의 hero:analytics 이벤트를 구독해 연결한다. */
+/** 측정 이벤트(개인정보 제외). 분석 SDK 는 window 의 hero:event 이벤트를 구독해 연결한다. */
 export function track(name: "hero_view" | "hero_interact" | "hero_select" | "hero_cta_click" | "lead_submit", detail: Record<string, string | number> = {}) {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("hero:analytics", { detail: { name, hero: "realestate-unit-explorer", ...detail } }));
+  window.dispatchEvent(new CustomEvent("hero:event", { detail: { name, hero: "realestate-unit-explorer", ...detail } }));
 }
 
 function hashUnitId(): string | null {
@@ -190,7 +190,10 @@ export function useExplorer(units: UnitRecord[]): {
   useEffect(() => {
     const apply = () => {
       const id = hashUnitId();
-      if (id && byId.has(id)) actions.select(id);
+      const u = id ? byId.get(id) : undefined;
+      // 복원은 track 없이 직접 dispatch. 해시가 없으면(뒤로가기) 선택 해제.
+      if (u) dispatch({ type: "select", id: u.id, floor: u.floor });
+      else if (!id) dispatch({ type: "select", id: null });
     };
     apply();
     window.addEventListener("hashchange", apply);
@@ -199,7 +202,7 @@ export function useExplorer(units: UnitRecord[]): {
       window.removeEventListener("hashchange", apply);
       window.removeEventListener("pageshow", apply);
     };
-  }, [byId, actions]);
+  }, [byId]);
 
   const skipSync = useRef(true);
   useEffect(() => {

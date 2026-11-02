@@ -110,7 +110,7 @@ function reducer(s: ExplorerState, a: Action): ExplorerState {
 /** 측정 이벤트: 개인정보 없이 window 이벤트로만 내보낸다(분석 도구 연결은 소비 측 책임). */
 export function track(name: "hero_view" | "hero_interact" | "hero_select" | "hero_cta_click" | "lead_submit", payload: Record<string, string | number | boolean> = {}) {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("hero-analytics", { detail: { name, hero: "clinic-dental-3d", ...payload } }));
+  window.dispatchEvent(new CustomEvent("hero:event", { detail: { name, hero: "clinic-dental-3d", ...payload } }));
 }
 
 const subscribeReduced = (cb: () => void) => subscribeReducedMotion(() => cb());

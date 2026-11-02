@@ -156,8 +156,8 @@ export function isDefaultConfig(config: SceneConfig): boolean {
 
 // ───────── 측정 이벤트 (개인정보 제외) ─────────
 export type HeroEventName = "hero_view" | "hero_interact" | "hero_select" | "hero_cta_click" | "lead_submit";
-/** window 로 CustomEvent("hero-analytics")를 쏜다. 실제 수집 도구 연결은 소비 측 책임. 이름·구성 ID·개수만 담는다. */
+/** window 로 CustomEvent("hero:event")를 쏜다. 실제 수집 도구 연결은 소비 측 책임. 이름·구성 ID·개수만 담는다. */
 export function track(name: HeroEventName, detail?: Record<string, string | number | boolean>) {
   if (typeof window === "undefined") return;
-  window.dispatchEvent(new CustomEvent("hero-analytics", { detail: { name, hero: "property-interior-configurator", ...detail } }));
+  window.dispatchEvent(new CustomEvent("hero:event", { detail: { name, hero: "property-interior-configurator", ...detail } }));
 }

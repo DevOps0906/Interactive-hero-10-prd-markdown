@@ -154,7 +154,10 @@ export function useExplorer() {
       undo: () => {
         if (state.history.length === 0) return;
         const prev = state.history[state.history.length - 1];
-        window.history.replaceState(null, "", prev ? `${HASH_KEY}${prev}` : window.location.pathname + window.location.search);
+        // 이력 항목을 추가하지 않고, 해시가 다를 때만 현재 항목의 해시를 맞춘다(같으면 no-op).
+        if (regionFromHash(window.location.hash) !== prev) {
+          window.history.replaceState(window.history.state, "", prev ? `${HASH_KEY}${prev}` : window.location.pathname + window.location.search);
+        }
         dispatch({ type: "undo" });
       },
       setView: (mode: Exclude<ViewMode, "custom">) => {

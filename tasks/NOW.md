@@ -39,4 +39,4 @@
 | B. GNB 탭(히어로섹션/전문 히어로섹션) + /industry/<slug> 10라우트 placeholder | builder | 완료 (커밋 2b59e19, 탭 전환·메뉴 순회 확인) |
 | C. 전문 히어로 10개 병렬 구현 (components/industry/<Name>/, 규칙 tasks/INDUSTRY_RULES.md) | builder ×10 | 완료 |
 | D. 통합 검증(build·lint·메뉴 순회·탭 전환·뒤로가기·해시 상태·콘솔 0), 전체화면 catch·GNB 가로 넘침 수정 | 팀장 | 완료 |
-| E. 리뷰(reviewer, Codex 한도) → 커밋·push | 팀장 | 진행 중 |
+| E. 리뷰(reviewer, Codex 한도) 🟡7건 반영 → 커밋·push | 팀장 | 완료 |
