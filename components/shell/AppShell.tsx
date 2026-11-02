@@ -32,6 +32,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const closeBtn = useRef<HTMLButtonElement>(null);
   const drawerOpen = open && mode === "drawer";
 
+  // 드로어 구간을 벗어나면 열림 상태를 버린다(다시 모바일로 줄였을 때 저절로 열리지 않게).
+  const [prevMode, setPrevMode] = useState(mode);
+  if (prevMode !== mode) {
+    setPrevMode(mode);
+    if (mode !== "drawer") setOpen(false);
+  }
+
   const setDrawer = useCallback((next: boolean) => {
     setOpen(next);
     // inert 해제 직후 포커스 이동을 위해 다음 프레임에 실행
@@ -56,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="shell" data-collapsed={collapsed} data-drawer-open={drawerOpen}>
-      <header className="topbar">
+      <header className="topbar" inert={drawerOpen}>
         <button
           ref={openBtn}
           type="button"
@@ -72,7 +79,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           Nomad-Hero-<b>Lab</b>
         </span>
       </header>
-      <div className="scrim" onClick={() => setDrawer(false)} />
+      <div className="scrim" aria-hidden="true" onClick={() => setDrawer(false)} />
 
       <nav className="gnb" id="gnb" aria-label="주 메뉴" inert={mode === "drawer" && !drawerOpen}>
         <div className="gnb-head">
@@ -96,7 +103,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                   className="gnb-item"
                   aria-current={pathname === href ? "page" : undefined}
                   aria-label={mode === "rail" ? `${h.no} ${h.title}` : undefined}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    if (drawerOpen) setDrawer(false);
+                  }}
                 >
                   <span className="no">{h.no}</span>
                   <span className="label">{h.title}</span>
@@ -110,7 +119,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </nav>
 
-      <main>{children}</main>
+      {/* 드로어가 열려 있으면 본문을 비활성화해 포커스·스크린리더가 배경으로 새지 않게 한다. */}
+      <main inert={drawerOpen}>{children}</main>
     </div>
   );
 }
