@@ -36,6 +36,6 @@
 | 단계 | 담당 | 상태 |
 |---|---|---|
 | A. PRD README 목록 표 변환 | 팀장 | 완료 |
-| B. GNB 탭(히어로섹션/전문 히어로섹션) + /industry/<slug> 10라우트 placeholder | builder | 진행 중 |
-| C. 전문 히어로 10개 병렬 구현 (components/industry/<Name>/) | builder ×10 | 대기 |
+| B. GNB 탭(히어로섹션/전문 히어로섹션) + /industry/<slug> 10라우트 placeholder | builder | 완료 (커밋 2b59e19, 탭 전환·메뉴 순회 확인) |
+| C. 전문 히어로 10개 병렬 구현 (components/industry/<Name>/, 규칙 tasks/INDUSTRY_RULES.md) | builder ×10 | 진행 중 |
 | D. 통합 검증(build·lint·브라우저 메뉴 순회·콘솔 0) → 리뷰 → 커밋·push | 팀장 | 대기 |
