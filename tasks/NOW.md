@@ -29,3 +29,13 @@
 
 ## 남은 일
 - `nomad-doctor . --fix` 미실행(자동 모드 차단) → 사용자가 `!`로 직접 실행 필요
+
+## 2차: 전문 히어로섹션 10종 (브랜치 feat/industry-heroes)
+근거: Hero_Industry_PRD/*.md (P0~P6). 기존 규칙 동일: 폴더 분리 병렬, HeroSlot 슬롯 사용, 팀장 통합 검증(메뉴 클릭 순회 포함).
+
+| 단계 | 담당 | 상태 |
+|---|---|---|
+| A. PRD README 목록 표 변환 | 팀장 | 완료 |
+| B. GNB 탭(히어로섹션/전문 히어로섹션) + /industry/<slug> 10라우트 placeholder | builder | 진행 중 |
+| C. 전문 히어로 10개 병렬 구현 (components/industry/<Name>/) | builder ×10 | 대기 |
+| D. 통합 검증(build·lint·브라우저 메뉴 순회·콘솔 0) → 리뷰 → 커밋·push | 팀장 | 대기 |

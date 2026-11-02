@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HEROES, heroHref } from "@/lib/hero/registry";
+import { HEROES, INDUSTRY_HEROES, heroHref, industryHref } from "@/lib/hero/registry";
 import { ThemeToggle } from "./ThemeToggle";
 import { useGnbMode } from "./useGnbMode";
 
@@ -31,6 +31,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const openBtn = useRef<HTMLButtonElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const drawerOpen = open && mode === "drawer";
+  const industry = pathname.startsWith("/industry");
+  const items = industry ? INDUSTRY_HEROES : HEROES;
+  const toHref = industry ? industryHref : heroHref;
+  const TABS = [
+    { id: "heroes", label: "히어로섹션", short: "히어로", href: heroHref(HEROES[0].slug), active: !industry },
+    { id: "industry", label: "전문 히어로섹션", short: "전문", href: industryHref(INDUSTRY_HEROES[0].slug), active: industry },
+  ];
 
   // 드로어 구간을 벗어나면 열림 상태를 버린다(다시 모바일로 줄였을 때 저절로 열리지 않게).
   const [prevMode, setPrevMode] = useState(mode);
@@ -93,9 +100,26 @@ export function AppShell({ children }: { children: ReactNode }) {
             접기
           </button>
         </div>
+        <div className="gnb-tabs" role="group" aria-label="히어로 분류">
+          {TABS.map((t) => (
+            <Link
+              key={t.id}
+              href={t.href}
+              className="gnb-tab"
+              aria-current={t.active ? "page" : undefined}
+              aria-label={mode === "rail" ? t.label : undefined}
+              title={mode === "rail" ? t.label : undefined}
+              onClick={() => {
+                if (drawerOpen) setDrawer(false);
+              }}
+            >
+              {mode === "rail" ? t.short : t.label}
+            </Link>
+          ))}
+        </div>
         <ul className="gnb-list">
-          {HEROES.map((h) => {
-            const href = heroHref(h.slug);
+          {items.map((h) => {
+            const href = toHref(h.slug);
             return (
               <li key={h.slug}>
                 <Link

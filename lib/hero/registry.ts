@@ -25,3 +25,24 @@ export function getHero(slug: string): HeroMeta {
   if (!hero) throw new Error(`Unknown hero slug: ${slug}`);
   return hero;
 }
+
+export const INDUSTRY_HEROES: readonly HeroMeta[] = [
+  { no: "01", slug: "architecture-building-reveal", title: "Architecture Blueprint Reveal", description: "건축사·설계사무소" },
+  { no: "02", slug: "realestate-unit-explorer", title: "Real Estate Unit Explorer", description: "분양·부동산 중개" },
+  { no: "03", slug: "legal-case-journey", title: "Legal Case Journey", description: "법무사·법률 사무소" },
+  { no: "04", slug: "sneaker-customizer", title: "Sneaker Configurator Hero", description: "운동화 쇼핑몰·D2C 브랜드" },
+  { no: "05", slug: "fashion-avatar-tryon", title: "Fashion Avatar Lookbook", description: "의류 쇼핑몰·패션 브랜드" },
+  { no: "06", slug: "hospital-anatomy-explorer", title: "Anatomy Care Explorer", description: "병원·클리닉" },
+  { no: "07", slug: "academy-robot-lab", title: "Robot Learning Lab", description: "코딩학원·로봇교육·AI 교육" },
+  { no: "08", slug: "academy-virtual-campus", title: "Virtual Campus Tour", description: "입시학원·직업학교·교육기관" },
+  { no: "09", slug: "clinic-dental-3d", title: "Dental Procedure Explorer", description: "치과·의료기관" },
+  { no: "10", slug: "property-interior-configurator", title: "Interior Space Configurator", description: "인테리어·건축·부동산·가구 쇼핑몰" },
+];
+
+export const industryHref = (slug: string) => `/industry/${slug}`;
+
+export function getIndustryHero(slug: string): HeroMeta {
+  const hero = INDUSTRY_HEROES.find((h) => h.slug === slug);
+  if (!hero) throw new Error(`Unknown industry hero slug: ${slug}`);
+  return hero;
+}
