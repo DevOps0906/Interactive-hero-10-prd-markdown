@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480" role="img" aria-label="교육용 다관절 로봇 팔 정지 이미지">
+  <rect width="640" height="480" fill="#0b0f18"/>
+  <ellipse cx="320" cy="420" rx="200" ry="26" fill="#1c2433"/>
+  <rect x="250" y="396" width="140" height="26" rx="8" fill="#5a6478"/>
+  <rect x="285" y="350" width="70" height="50" rx="10" fill="#4a5a74"/>
+  <circle cx="320" cy="340" r="28" fill="#46566e" stroke="#3fd0bd" stroke-width="3"/>
+  <rect x="306" y="170" width="28" height="170" rx="8" fill="#a3adbf" transform="rotate(14 320 340)"/>
+  <circle cx="365" cy="176" r="24" fill="#46566e" stroke="#3fd0bd" stroke-width="3"/>
+  <rect x="351" y="94" width="24" height="90" rx="8" fill="#a3adbf" transform="rotate(62 365 176)"/>
+  <circle cx="446" cy="130" r="18" fill="#46566e" stroke="#3fd0bd" stroke-width="3"/>
+  <rect x="436" y="130" width="20" height="46" rx="6" fill="#a3adbf" transform="rotate(-20 446 130)"/>
+  <circle cx="452" cy="182" r="7" fill="#3fd0bd"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600" role="img" aria-label="거실 인테리어 포스터">
+  <rect width="960" height="600" fill="#e9edf2"/>
+  <polygon points="140,170 480,60 820,170 480,290" fill="#efe9df"/>
+  <polygon points="140,170 480,290 480,520 140,380" fill="#d9d2c6"/>
+  <polygon points="820,170 480,290 480,520 820,380" fill="#e6dfd3"/>
+  <polygon points="480,290 820,380 480,520 140,380" fill="#c8a375"/>
+  <rect x="610" y="205" width="110" height="80" fill="#bfe0ff" stroke="#f2f2f0" stroke-width="6" transform="skewY(18)"/>
+  <polygon points="300,380 420,330 560,380 440,430" fill="#b86f5e"/>
+  <polygon points="330,330 420,295 500,325 410,360" fill="#6f7f93"/>
+  <polygon points="330,330 330,300 420,265 420,295" fill="#5f6f83"/>
+  <polygon points="380,385 440,362 490,382 430,405" fill="#b08a62"/>
+</svg>

@@ -1,0 +1,8 @@
+{
+  "_comment": "DEMO 샘플 형식. 실제 매물이 아님. 가격 단위 만원, 면적 ㎡. id 는 GLB 노드 U_<id> 와 일치해야 한다.",
+  "building": { "dong": "101", "floors": 7, "unitsPerFloor": 4 },
+  "units": [
+    { "id": "101-501", "dong": "101", "floor": 5, "ho": 501, "slot": 0, "type": "59A", "facing": "남", "exclusiveArea": 59.97, "supplyArea": 79.16, "priceMan": 93000, "maintenanceFeeMan": 22, "status": "available", "updatedAt": "2026-11-03 09:00 (샘플 기준)" },
+    { "id": "101-502", "dong": "101", "floor": 5, "ho": 502, "slot": 1, "type": "74B", "facing": "동", "exclusiveArea": 74.92, "supplyArea": 98.89, "priceMan": 116000, "maintenanceFeeMan": 28, "status": "reserved", "updatedAt": "2026-11-03 09:00 (샘플 기준)" }
+  ]
+}

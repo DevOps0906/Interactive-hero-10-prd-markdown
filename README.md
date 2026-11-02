@@ -31,18 +31,24 @@
 | 히어로 01~10 효과 구현 (PRD P0~P5 코드) | 완료 |
 | 공통 배치: ≥1024 글 좌 / 스테이지 우, 1023 이하 글 → 스테이지 → 패널 | 완료 |
 | 데스크톱 브라우저 확인 (10개 콘솔 오류 0) | 완료 |
+| GNB 탭: 히어로섹션 / 전문 히어로섹션 | 완료 |
+| 전문 히어로 01~10 효과·업무 흐름 구현 (업종별 PRD P0~P6 코드, 데모 폼) | 완료 |
+| 전문 히어로 브라우저 확인 (메뉴 순회·탭 전환·뒤로가기, 콘솔 오류 0) | 완료 |
+| 전문 히어로 실제 GLB 모델·실데이터 연동, 의료·법률 문구 전문가 검수 | 남음 |
 | 해상도별 캡처 · fps 실측을 각 `components/heroes/*/QA.md`에 기록 | 남음 |
 | 실기기(모바일) 검수 | 남음 |
 
 - 실행: `npm install` → `npm run dev` (http://localhost:3100)
-- 브랜치: `feat/hero-dashboard`
+- 브랜치: `feat/hero-dashboard`(히어로섹션) → `feat/industry-heroes`(전문 히어로섹션)
 
 ## 콘텐츠 바로가기
 
 | 구분 | 경로 |
 |---|---|
-| PRD 10종 | [`Hero_PRD/`](Hero_PRD/) |
+| PRD 10종 (히어로섹션) | [`Hero_PRD/`](Hero_PRD/) |
+| PRD 10종 (전문 히어로섹션) | [`Hero_Industry_PRD/`](Hero_Industry_PRD/) |
 | 디자인 시스템 | [`design/DESIGN.md`](design/DESIGN.md) · [`design/tokens.css`](design/tokens.css) · [`design/preview.html`](design/preview.html) |
 | 히어로 구현 · QA | [`components/heroes/`](components/heroes/) (폴더별 `QA.md`) |
+| 전문 히어로 구현 · QA · 모델 교체 가이드 | [`components/industry/`](components/industry/) (폴더별 `QA.md`·`README.md`) |
 | 공용 셸 · 히어로 슬롯 | [`components/shell/`](components/shell/) · [`lib/hero/`](lib/hero/) |
 | 진행 상태 | [`tasks/NOW.md`](tasks/NOW.md) |

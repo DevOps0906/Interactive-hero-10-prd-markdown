@@ -1,0 +1,382 @@
+/* 포인트 컬러 1개(--color-primary) + 뉴트럴 배경. 색·크기는 토큰만. */
+.root {
+  --hero-accent: var(--color-primary);
+}
+
+/* ── 스테이지 ── */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 55% 45%, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+  color: var(--color-text);
+}
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+}
+.canvasWrap canvas {
+  display: block;
+}
+.poster,
+.staticShoe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: calc(var(--spacing) * 8) calc(var(--spacing) * 4);
+}
+.poster {
+  background: radial-gradient(ellipse at 55% 45%, var(--color-surface) 0%, var(--color-surface-hover) 100%);
+}
+
+/* ── 오버레이 (루트는 클릭을 통과시키고 컨트롤만 받는다) ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  padding: calc(var(--spacing) * 2);
+  gap: calc(var(--spacing) * 2);
+}
+.top,
+.dock,
+.fallbackMsg,
+.loading {
+  pointer-events: auto;
+}
+.top {
+  min-width: 0;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: calc(var(--spacing) * 2);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+}
+.toolGroup {
+  display: flex;
+  gap: calc(var(--spacing) * 1);
+  flex: none;
+  padding: calc(var(--spacing) * 1);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+.loading,
+.fallbackMsg {
+  align-self: center;
+  margin: 0;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+  max-width: 44ch;
+  text-align: center;
+  font-size: var(--text-caption);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+}
+.fallbackMsg p {
+  margin: 0 0 calc(var(--spacing) * 2);
+}
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+.hint {
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+.dock {
+  display: none; /* 모바일은 하단 시트가 대신한다 */
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--spacing) * 3);
+  padding: calc(var(--spacing) * 3);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+.dock .group {
+  margin: 0;
+}
+@media (width >= 768px) {
+  .dock {
+    display: grid;
+  }
+  .mobileOnly {
+    display: none;
+  }
+}
+
+/* ── 컨트롤 공통 ── */
+.group {
+  margin: 0 0 calc(var(--spacing) * 4);
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.group legend,
+.group h3 {
+  padding: 0;
+  margin: 0 0 calc(var(--spacing) * 2);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+  align-items: center;
+}
+.chip,
+.chipLabel > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 1.5);
+  min-height: 36px;
+  padding: 0 calc(var(--spacing) * 3);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-input);
+  border-radius: var(--radius-control);
+  font: inherit;
+  font-size: var(--text-caption);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip:hover,
+.chipLabel:hover > span {
+  background: var(--color-surface-hover);
+}
+.chip[aria-pressed="true"],
+.chipLabel input:checked + span {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  font-weight: 600;
+}
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.chip:focus-visible,
+.chipLabel input:focus-visible + span,
+.swatchLabel input:focus-visible + .swatch {
+  outline: var(--ring-width) solid var(--color-primary);
+  outline-offset: var(--ring-offset);
+}
+.chipLabel,
+.swatchLabel {
+  position: relative;
+  display: inline-flex;
+}
+.chipLabel input,
+.swatchLabel input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.chipLabel em {
+  font-style: normal;
+  font-size: var(--text-caption);
+  color: var(--color-warning);
+}
+.chipLabel[data-status="out"] em {
+  color: var(--color-danger);
+}
+.chipLabel > span {
+  pointer-events: none;
+}
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+  margin-bottom: calc(var(--spacing) * 2);
+}
+.swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--color-input);
+  pointer-events: none;
+}
+.swatchLabel input:checked + .swatch {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft), 0 0 0 5px var(--color-primary);
+}
+.matSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--color-input);
+  display: inline-block;
+}
+.state {
+  margin: 0;
+  font-size: var(--text-caption);
+}
+.muted {
+  color: var(--color-text-muted);
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── 하단 시트(모바일: 화면 아래에 붙음 / 768~: 일반 패널) ── */
+.sheet {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);
+  box-shadow: 0 -6px 18px color-mix(in srgb, var(--color-text) 10%, transparent);
+}
+.sheetBar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  flex-wrap: wrap;
+}
+.sheetSummary {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.sheetSummary h2 {
+  margin: 0;
+  font-size: var(--text-body);
+}
+.sheetSummary p {
+  margin: 0;
+  font-size: var(--text-caption);
+}
+.sheetBar :global(.btn-primary)[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.stock[data-status="low"] {
+  color: var(--color-warning);
+}
+.stock[data-status="out"] {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+.notice {
+  margin: calc(var(--spacing) * 2) 0 0;
+  min-height: 1.4em;
+  font-size: var(--text-caption);
+}
+.notice[data-kind="success"] {
+  color: var(--color-success);
+}
+.notice[data-kind="error"] {
+  color: var(--color-danger);
+}
+.sheetBody {
+  display: none;
+  max-height: 55svh;
+  overflow-y: auto;
+  margin-top: calc(var(--spacing) * 3);
+}
+.sheetBody[data-open="true"] {
+  display: block;
+}
+.dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: calc(var(--spacing) * 1) calc(var(--spacing) * 4);
+  margin: 0;
+  font-size: var(--text-caption);
+}
+.dl dt {
+  color: var(--color-text-muted);
+}
+.dl dd {
+  margin: 0;
+}
+.dlRow {
+  display: contents;
+}
+.errorText {
+  color: var(--color-danger);
+  font-size: var(--text-caption);
+  margin: calc(var(--spacing) * 2) 0 0;
+}
+.cart {
+  list-style: none;
+  margin: 0 0 calc(var(--spacing) * 3);
+  padding: 0;
+  display: grid;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-caption);
+}
+.cart li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  padding-bottom: calc(var(--spacing) * 2);
+  border-bottom: 1px solid var(--color-border);
+}
+.checkout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+  flex-wrap: wrap;
+}
+.checkout :global(.btn-primary):disabled {
+  opacity: 0.6;
+}
+.fine {
+  margin: calc(var(--spacing) * 3) 0 0;
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+}
+.sheetToggle {
+  flex: none;
+}
+
+@media (width >= 768px) {
+  .sheet {
+    position: static;
+    box-shadow: none;
+    padding: calc(var(--spacing) * 6) calc(var(--spacing) * 8);
+  }
+  .sheetToggle {
+    display: none;
+  }
+  .sheetBody,
+  .sheetBody[data-open="true"] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: calc(var(--spacing) * 6);
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip,
+  .swatch {
+    transition: none;
+  }
+}

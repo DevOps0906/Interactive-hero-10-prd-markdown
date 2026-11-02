@@ -1,0 +1,123 @@
+/* 히어로 토큰: --hero-bg/fg/accent 는 컴포넌트가 주입한다. 포인트 컬러 1개 + 뉴트럴. */
+.root {
+  --hero-bg: #0b0e14;
+  --hero-fg: #eef0f3;
+  --hero-accent: #3fd0bd;
+}
+
+.stage {
+  position: absolute; inset: 0; overflow: hidden; border-radius: var(--radius-card);
+  background: radial-gradient(ellipse at 50% 40%, #1c2433 0%, var(--hero-bg) 75%); color: var(--hero-fg);
+}
+.canvasWrap { position: absolute; inset: 0; touch-action: pan-y; }
+.canvasWrap canvas { display: block; }
+
+.loading {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center;
+  gap: calc(var(--spacing) * 3); font-size: var(--text-caption); background: var(--hero-bg); z-index: 5;
+}
+.loading img { max-width: min(80%, 420px); height: auto; opacity: 0.85; }
+.spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--hero-fg) 20%, transparent); border-top-color: var(--hero-accent);
+  animation: vc-spin 0.9s linear infinite;
+}
+@keyframes vc-spin { to { transform: rotate(360deg); } }
+
+.fallback { height: 100%; display: grid; place-content: center; justify-items: center; gap: calc(var(--spacing) * 3); padding: calc(var(--spacing) * 4); text-align: center; font-size: var(--text-caption); }
+.fallback img { max-width: min(100%, 420px); height: auto; }
+.fallback p { margin: 0; max-width: 40ch; }
+
+/* 3D 라벨 */
+.hotspot {
+  display: inline-flex; align-items: center; gap: calc(var(--spacing) * 2); white-space: nowrap; cursor: pointer;
+  background: color-mix(in srgb, var(--hero-bg) 82%, transparent); color: var(--hero-fg);
+  border: 1px solid var(--hero-accent); border-radius: 999px; padding: 2px calc(var(--spacing) * 2.5);
+  font-size: var(--text-caption); backdrop-filter: blur(4px);
+}
+.hotspot[data-active="true"] { background: var(--hero-accent); color: var(--hero-bg); }
+.hotDot { width: 10px; height: 10px; border-radius: 50%; background: var(--hero-accent); }
+.hotspot[data-active="true"] .hotDot { background: var(--hero-bg); }
+
+/* 스테이지 위 UI */
+.overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; gap: calc(var(--spacing) * 2); padding: calc(var(--spacing) * 2); pointer-events: none; color: var(--hero-fg); }
+.overlay > * { pointer-events: auto; }
+.toolbar { display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 1.5); align-self: flex-start; max-width: 100%; z-index: 6; }
+.toolbar :global(.btn-ghost), .card :global(.btn-ghost) { background: color-mix(in srgb, var(--hero-bg) 82%, transparent); color: var(--hero-fg); min-height: 36px; padding-inline: calc(var(--spacing) * 2.5); }
+.toolbar :global(.btn-ghost):hover:not(:disabled), .card :global(.btn-ghost):hover:not(:disabled) { background: var(--color-surface-hover); }
+.toolbar :global(.btn-ghost)[aria-pressed="true"] { border-color: var(--hero-accent); color: var(--hero-accent); }
+.overlay :global(.btn-ghost):disabled, .overlay :global(.btn-primary):disabled { opacity: 0.5; cursor: not-allowed; }
+.group { display: inline-flex; gap: calc(var(--spacing) * 1.5); }
+
+.card {
+  align-self: flex-end; width: min(100%, 360px); max-height: 60%; overflow: auto; z-index: 6;
+  background: color-mix(in srgb, var(--hero-bg) 90%, transparent); border: 1px solid var(--color-border); border-radius: var(--radius-card);
+  padding: calc(var(--spacing) * 3); font-size: var(--text-caption); backdrop-filter: blur(6px);
+}
+.card[data-empty="true"] { width: min(100%, 300px); }
+.card h2 { font-size: var(--text-body); margin: 0; }
+.card p { margin: calc(var(--spacing) * 1.5) 0; }
+.cardHead { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 2); }
+.chips { list-style: none; margin: calc(var(--spacing) * 2) 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 1.5); }
+.chips li { border: 1px solid var(--color-border); border-radius: 999px; padding: 1px calc(var(--spacing) * 2.5); }
+.schedule { margin-top: calc(var(--spacing) * 2); overflow-x: auto; }
+.schedule table, .tableWrap table { width: 100%; border-collapse: collapse; }
+.schedule caption { text-align: left; color: color-mix(in srgb, var(--hero-fg) 70%, transparent); padding-bottom: calc(var(--spacing) * 1); }
+.schedule th, .schedule td, .tableWrap th, .tableWrap td { text-align: left; padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 2); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+.muted { color: color-mix(in srgb, var(--hero-fg) 70%, transparent); }
+.demo { font: 500 var(--text-caption)/1 var(--font-mono); color: var(--hero-accent); margin-left: calc(var(--spacing) * 1); }
+.row { display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 2); align-items: center; }
+
+/* 하단 패널 */
+.panel { background: var(--hero-bg); color: var(--hero-fg); padding: calc(var(--spacing) * 6); border-top: 1px solid var(--color-border); }
+.panel h2 { font-size: var(--text-h2); margin: 0; }
+.panel h3 { font-size: var(--text-body); margin: 0 0 calc(var(--spacing) * 3); }
+.panelHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 3); margin-bottom: calc(var(--spacing) * 5); }
+.grid { display: grid; gap: calc(var(--spacing) * 4); grid-template-columns: minmax(0, 1fr); }
+.block { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: calc(var(--spacing) * 4); min-width: 0; }
+.panel .muted { font-size: var(--text-caption); margin: calc(var(--spacing) * 2) 0; }
+.pick {
+  display: inline-flex; align-items: center; min-height: var(--size-gnb-item); padding-inline: calc(var(--spacing) * 3);
+  background: transparent; color: var(--hero-fg); border: 1px solid var(--color-border); border-radius: var(--radius-control); font-size: var(--text-caption);
+}
+.pick[aria-pressed="true"] { border-color: var(--hero-accent); background: color-mix(in srgb, var(--hero-accent) 18%, transparent); }
+.pick:hover { background: var(--color-surface-hover); }
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 2); }
+.panel :global(.btn-ghost) { color: var(--hero-fg); }
+.panel :global(.btn-ghost):disabled { opacity: 0.5; cursor: not-allowed; }
+.field { display: grid; gap: calc(var(--spacing) * 1.5); font-size: var(--text-caption); min-width: 0; }
+.field select, .field input[type="date"], .field input[type="number"] {
+  min-height: var(--size-gnb-item); background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-input);
+  border-radius: var(--radius-control); padding-inline: calc(var(--spacing) * 2); width: 100%;
+}
+.field [aria-invalid="true"] { border-color: var(--color-danger); }
+.check { grid-template-columns: auto 1fr; align-items: start; column-gap: calc(var(--spacing) * 2); }
+.check em { grid-column: 1 / -1; }
+.check input { margin-top: 3px; accent-color: var(--hero-accent); }
+.err { color: var(--color-danger); font-style: normal; }
+.form { display: grid; gap: calc(var(--spacing) * 3); grid-template-columns: minmax(0, 1fr); }
+.status { min-height: 1.6em; margin-top: calc(var(--spacing) * 3); font-size: var(--text-caption); color: var(--hero-accent); }
+.status p { margin: 0; }
+.tableWrap { overflow-x: auto; margin-top: calc(var(--spacing) * 3); font-size: var(--text-caption); }
+.notice { margin: calc(var(--spacing) * 5) 0 0; font-size: var(--text-caption); color: color-mix(in srgb, var(--hero-fg) 70%, transparent); }
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* 모바일 ~767: 정보 카드는 바텀시트 */
+@media (width < 768px) {
+  .card { align-self: stretch; max-height: 48%; border-radius: var(--radius-card) var(--radius-card) 0 0; margin: 0 calc(var(--spacing) * -2) calc(var(--spacing) * -2); width: calc(100% + var(--spacing) * 4); }
+  .card[data-empty="true"] { display: none; }
+}
+/* 태블릿 768~1199 / 데스크톱 1200~ */
+@media (width >= 768px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wide { grid-column: 1 / -1; }
+  .form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form .check, .form .row { grid-column: 1 / -1; }
+  .overlay { padding: calc(var(--spacing) * 3); }
+}
+@media (width >= 1200px) {
+  .panel { padding: calc(var(--spacing) * 10); }
+  .grid { gap: calc(var(--spacing) * 6); }
+  .form { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

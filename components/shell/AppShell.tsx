@@ -125,6 +125,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Link
                   href={href}
                   className="gnb-item"
+                  title={h.title}
                   aria-current={pathname === href ? "page" : undefined}
                   aria-label={mode === "rail" ? `${h.no} ${h.title}` : undefined}
                   onClick={() => {

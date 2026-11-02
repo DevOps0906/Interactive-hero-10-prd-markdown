@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" role="img" aria-label="법무 절차 포스터">
+  <rect width="640" height="420" fill="#0d1118"/>
+  <g fill="#3a4252"><ellipse cx="110" cy="290" rx="62" ry="14"/><ellipse cx="260" cy="290" rx="62" ry="14"/><ellipse cx="410" cy="290" rx="62" ry="14"/><ellipse cx="560" cy="290" rx="62" ry="14"/></g>
+  <g stroke="#6b7690" stroke-width="4" fill="none"><path d="M172 270H198M322 270H348M472 270H498"/></g>
+  <rect x="80" y="200" width="60" height="62" rx="6" fill="#e0b252"/>
+  <rect x="236" y="190" width="46" height="72" rx="4" fill="#dfe3ea"/>
+  <rect x="380" y="220" width="60" height="42" fill="#59647a"/><path d="M372 220L410 194L448 220Z" fill="#e0b252"/>
+  <rect x="548" y="206" width="24" height="56" rx="4" fill="#59647a"/><rect x="530" y="250" width="60" height="12" rx="4" fill="#e0b252"/>
+  <g fill="#dfe3ea" opacity=".9"><rect x="250" y="70" width="140" height="100" rx="6"/></g>
+  <rect x="250" y="70" width="140" height="18" rx="6" fill="#e0b252"/>
+  <g fill="#7b8594"><rect x="266" y="104" width="100" height="6"/><rect x="266" y="120" width="100" height="6"/><rect x="266" y="136" width="64" height="6"/></g>
+  <text x="320" y="360" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#eef0f3">접수 → 검토 → 제출 → 완료 (DEMO)</text>
+</svg>
