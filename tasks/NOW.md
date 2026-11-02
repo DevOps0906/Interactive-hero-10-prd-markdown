@@ -11,9 +11,9 @@
 | 단계 | 담당 | 상태 |
 |---|---|---|
 | 1. 디자인 토큰·DESIGN.md·미리보기 (`design/`) | designer (sonnet) | 완료 (시안: design/preview.html) |
-| 2. 사용자 디자인 확정 | 사용자 | 진행 중 — 확인 4건 대기 |
-| 3. Next.js 셸: GNB + 10개 라우트 + 히어로 자리 | builder | 대기 |
-| 4. 히어로 10개 구현 (PRD별 P0~P5, 하나씩) | builder → codex-reviewer | 대기 |
+| 2. 디자인 확정 | 팀장 | 추천값 적용(틸·248/64/288·레일·번호 아이콘·데모 버튼 제거) |
+| 3. Next.js 셸: GNB + 10개 라우트 + 히어로 자리 (브랜치 feat/hero-dashboard) | builder | 진행 중 |
+| 4. 히어로 10개 병렬 구현 (각 PRD P0~P5, 폴더 분리) | builder ×10 → codex-reviewer | 대기 |
 
 ## 남은 일
 - `nomad-doctor . --fix` 미실행(자동 모드 차단) → 사용자가 `!`로 직접 실행 필요
