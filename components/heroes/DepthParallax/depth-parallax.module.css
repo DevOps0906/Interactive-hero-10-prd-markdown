@@ -1,0 +1,311 @@
+/* Depth Parallax — 히어로는 테마와 무관하게 다크 톤(PRD 2장). 토큰 --hero-* 는 루트에서 주입한다. */
+.root {
+  --hero-bg: #080b12;
+  --hero-fg: #eef0f3;
+  --hero-muted: #a4acb8;
+  --hero-line: rgb(255 255 255 / 0.16);
+  --hero-surface: rgb(12 17 28 / 0.88);
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  position: relative;
+}
+
+.track {
+  position: relative;
+  height: 220svh;
+}
+
+.sticky {
+  position: sticky;
+  top: var(--size-topbar);
+  height: calc(100svh - var(--size-topbar));
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: calc(var(--spacing) * 3);
+  padding: calc(var(--spacing) * 4);
+}
+
+.text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+  max-width: 60ch;
+}
+
+.kicker {
+  font: 500 var(--text-caption) / 1 var(--font-mono);
+  color: var(--hero-accent);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-size: var(--text-display);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.desc {
+  color: var(--hero-muted);
+  margin: 0;
+}
+
+.cta {
+  align-self: flex-start;
+  min-height: var(--size-gnb-item);
+  padding-inline: calc(var(--spacing) * 5);
+  background: var(--hero-accent);
+  color: #080b12;
+  border: 0;
+  border-radius: var(--radius-control);
+  font-weight: 600;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+.hint {
+  color: var(--hero-muted);
+  font-size: var(--text-caption);
+  margin: 0;
+}
+
+.stageWrap {
+  position: relative;
+  min-height: 0;
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-bg) url("/heroes/depth-parallax/fallback.svg") center / cover no-repeat;
+  touch-action: pan-y;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: calc(var(--spacing) * 4);
+  background: rgb(8 11 18 / 0.55);
+  color: var(--hero-fg);
+  pointer-events: none;
+  font-size: var(--text-caption);
+}
+
+.loader {
+  display: block;
+  width: 160px;
+  height: 3px;
+  margin: 0 auto calc(var(--spacing) * 3);
+  background: var(--hero-line);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.loader::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: var(--hero-accent);
+  animation: slide 1.1s var(--ease-out) infinite;
+}
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+
+.info {
+  position: absolute;
+  top: calc(var(--spacing) * 3);
+  left: calc(var(--spacing) * 3);
+  right: calc(var(--spacing) * 3);
+  max-width: 340px;
+  padding: calc(var(--spacing) * 4);
+  background: var(--hero-surface);
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-card);
+  z-index: 3;
+}
+.info h2 {
+  font-size: var(--text-h2);
+  margin: 0 0 calc(var(--spacing) * 2);
+}
+.info p {
+  margin: 0 0 calc(var(--spacing) * 3);
+  color: var(--hero-muted);
+  font-size: var(--text-body);
+}
+.info button,
+.panel button,
+.toggle {
+  min-height: 36px;
+  padding-inline: calc(var(--spacing) * 3);
+  background: transparent;
+  color: var(--hero-fg);
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-control);
+}
+.info button:hover,
+.panel button:hover,
+.toggle:hover {
+  background: rgb(255 255 255 / 0.08);
+}
+.panel button[aria-pressed="true"] {
+  border-color: var(--hero-accent);
+  color: var(--hero-accent);
+}
+
+.controls {
+  position: absolute;
+  right: calc(var(--spacing) * 3);
+  bottom: calc(var(--spacing) * 3);
+  left: calc(var(--spacing) * 3);
+  z-index: 4;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: calc(var(--spacing) * 2);
+  pointer-events: none;
+}
+.controls > * {
+  pointer-events: auto;
+}
+.toggle {
+  background: var(--hero-surface);
+}
+
+.panel {
+  width: min(100%, 340px);
+  max-height: min(62svh, 560px);
+  overflow-y: auto;
+  padding: calc(var(--spacing) * 3);
+  background: var(--hero-surface);
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(8px);
+  font-size: var(--text-caption);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+.panel fieldset {
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-control);
+  margin: 0;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+.panel legend {
+  padding-inline: calc(var(--spacing) * 1);
+  color: var(--hero-accent);
+  font-weight: 600;
+}
+.status {
+  margin: 0;
+  color: var(--hero-muted);
+  font-family: var(--font-mono);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 1);
+}
+.field select {
+  min-height: 36px;
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  border: 1px solid var(--hero-line);
+  border-radius: var(--radius-control);
+}
+.field input[type="range"] {
+  accent-color: var(--hero-accent);
+  width: 100%;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  min-height: 28px;
+}
+.check input {
+  accent-color: var(--hero-accent);
+  width: 18px;
+  height: 18px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+}
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: calc(var(--spacing) * 1);
+}
+.reset {
+  align-self: flex-end;
+}
+
+.root :focus-visible {
+  outline: var(--ring-width) solid var(--hero-accent);
+  outline-offset: var(--ring-offset);
+}
+
+/* 태블릿 768~1023 */
+@media (width >= 768px) {
+  .sticky {
+    top: 0;
+    height: 100svh;
+    padding: calc(var(--spacing) * 6);
+  }
+  .track {
+    height: 240svh;
+  }
+  .controls {
+    left: auto;
+  }
+}
+
+/* 데스크톱 1024~ : 이단 구성 (텍스트 좌 · Stage 우 55~70%) */
+@media (width >= 1024px) {
+  .sticky {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6.2fr);
+    gap: calc(var(--spacing) * 8);
+    align-items: stretch;
+  }
+  .text {
+    padding-block: calc(var(--spacing) * 8);
+  }
+  .hint {
+    margin-top: calc(var(--spacing) * 6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader::after {
+    animation: none;
+    width: 100%;
+  }
+  .cta {
+    transition: none;
+  }
+}

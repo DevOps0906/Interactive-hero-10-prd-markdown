@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Cursor Constellation 정적 대체 이미지">
+  <rect width="640" height="360" fill="#080b12"/>
+  <g stroke="#3fd0bd" stroke-opacity=".45" stroke-width="1" fill="none">
+    <path d="M80 280 L180 190 L300 230 L400 120 L520 160 L580 70"/>
+    <path d="M180 190 L220 90 L400 120"/>
+    <path d="M300 230 L460 290 L520 160"/>
+  </g>
+  <g fill="#eef0f3">
+    <circle cx="80" cy="280" r="3"/><circle cx="180" cy="190" r="3"/><circle cx="300" cy="230" r="3"/>
+    <circle cx="400" cy="120" r="3"/><circle cx="520" cy="160" r="3"/><circle cx="580" cy="70" r="3"/>
+    <circle cx="220" cy="90" r="3"/><circle cx="460" cy="290" r="3"/>
+  </g>
+</svg>

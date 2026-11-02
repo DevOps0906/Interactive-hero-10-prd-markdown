@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="액체 형태의 오브젝트 대체 이미지">
+  <defs>
+    <radialGradient id="g" cx="40%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#a8f0ff"/>
+      <stop offset="0.45" stop-color="#5ee1ff"/>
+      <stop offset="0.8" stop-color="#8a6bff"/>
+      <stop offset="1" stop-color="#2a1f66"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#g)" d="M200 40c62 0 118 38 140 98 20 56-6 90-14 134-10 56-62 96-126 92-70-4-128-44-140-110-10-54 20-84 30-130C100 78 144 40 200 40z"/>
+</svg>

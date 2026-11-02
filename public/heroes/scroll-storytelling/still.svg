@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="중앙 코어와 여덟 개의 외피 조각으로 이루어진 장치의 정지 이미지">
+  <rect width="640" height="400" fill="#080B12"/>
+  <g fill="none" stroke="#3fd0bd" stroke-width="2">
+    <circle cx="320" cy="200" r="150" stroke-opacity=".25" stroke-dasharray="4 8"/>
+    <polygon points="320,130 380,165 380,235 320,270 260,235 260,165" fill="#12302f"/>
+    <polygon points="320,60 340,80 320,100 300,80"/><polygon points="320,300 340,320 320,340 300,320"/>
+    <polygon points="190,180 210,200 190,220 170,200"/><polygon points="450,180 470,200 450,220 430,200"/>
+  </g>
+  <circle cx="320" cy="200" r="14" fill="#3fd0bd"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#080B12"/>
+      <stop offset="1" stop-color="#15213a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="860" cy="230" r="90" fill="#3FD0BD" opacity="0.14"/>
+  <g fill="#fff" opacity="0.7">
+    <circle cx="140" cy="120" r="1.6"/><circle cx="330" cy="70" r="1.2"/><circle cx="520" cy="180" r="1.8"/>
+    <circle cx="720" cy="90" r="1.4"/><circle cx="1040" cy="140" r="1.6"/><circle cx="1130" cy="300" r="1.2"/>
+    <circle cx="240" cy="290" r="1.2"/><circle cx="640" cy="320" r="1.4"/>
+  </g>
+  <path d="M0 520 L140 430 L260 500 L420 390 L580 490 L760 400 L940 480 L1080 420 L1200 470 V800 H0Z" fill="#14203a"/>
+  <path d="M0 600 L180 520 L320 590 L520 500 L700 580 L880 510 L1040 570 L1200 520 V800 H0Z" fill="#0f182c"/>
+  <path d="M0 690 L220 630 L400 680 L620 620 L820 670 L1000 630 L1200 680 V800 H0Z" fill="#0a111f"/>
+  <polygon points="300,560 340,610 300,660 260,610" fill="#3FD0BD" opacity="0.85"/>
+  <polygon points="900,590 945,640 900,690 855,640" fill="#8aa4ff" opacity="0.8"/>
+</svg>

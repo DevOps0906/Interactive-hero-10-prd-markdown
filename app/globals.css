@@ -20,8 +20,8 @@
   --color-danger: #d64545;
 
   /* 서체 */
-  --font-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;   /* 메뉴 번호 01~10·수치 */
+  --font-sans: var(--font-pretendard), "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;   /* 메뉴 번호 01~10·수치 */
 
   /* 글자 크기 — 모바일 기준값 (태블릿·데스크톱은 아래 @media) */
   --text-display: 28px;   /* 히어로 제목 */

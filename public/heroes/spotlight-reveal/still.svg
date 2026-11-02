@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="Spotlight Reveal 대체 스틸: 어두운 장면 위로 밝은 원형 영역이 두 번째 장면을 드러낸다">
+  <defs>
+    <radialGradient id="g" cx="62%" cy="45%" r="38%">
+      <stop offset="0" stop-color="#3fd0bd"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </radialGradient>
+    <clipPath id="c"><ellipse cx="744" cy="315" rx="260" ry="240"/></clipPath>
+  </defs>
+  <rect width="1200" height="700" fill="#080B12"/>
+  <text x="80" y="360" font-family="system-ui,sans-serif" font-size="150" font-weight="800" fill="none" stroke="#9aa2ae" stroke-opacity=".5" stroke-width="2">SURFACE</text>
+  <g clip-path="url(#c)">
+    <rect width="1200" height="700" fill="url(#g)"/>
+    <text x="80" y="360" font-family="system-ui,sans-serif" font-size="150" font-weight="800" fill="#080B12">DEPTH</text>
+  </g>
+</svg>
